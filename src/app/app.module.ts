@@ -21,6 +21,7 @@ import { MapContentsComponent } from './map/map-contents/map-contents.component'
 import { SettingsComponent } from './map/settings/settings.component';
 import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
 import { MapViewComponent } from './map/map-view/map-view.component';
+import { AppStoreModule } from './app-store.module';
 
 @NgModule({
     declarations: [
@@ -45,6 +46,7 @@ import { MapViewComponent } from './map/map-view/map-view.component';
         BrowserAnimationsModule,
         FlexLayoutModule,
         AppMaterialModule,
+        AppStoreModule,
         HttpClientModule,
         InMemoryWebApiModule.forRoot(InMemoryDataService)
     ],
