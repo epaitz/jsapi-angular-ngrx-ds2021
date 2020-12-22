@@ -30,7 +30,7 @@ describe('AppComponent', () => {
         expect(appComponent).toBeTruthy();
     });
 
-    // it('should have as title \'jsapi-angular-ds2021\'', () => {
-    // expect(appComponent.title).toEqual('jsapi-angular-ds2021');
+    // it('should have as title \'jsapi-angular-ngrx-ds2021\'', () => {
+    // expect(appComponent.title).toEqual('jsapi-angular-ngrx-ds2021');
     // });
 });

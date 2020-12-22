@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('jsapi-angular-ds2021 app is running!');
+    expect(page.getTitleText()).toEqual('jsapi-angular-ngrx-ds2021 app is running!');
   });
 
   afterEach(async () => {

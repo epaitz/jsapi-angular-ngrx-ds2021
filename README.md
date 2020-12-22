@@ -29,7 +29,7 @@ There are a few configuration changes that have to me made to an Angular Project
 
 - angular.json
 
-Add the following to the architect/build/options section of the [angular.json](https://github.com/epaitz/jsapi-angular-ds2021/blob/f99bb2d7268a5ea8b47217cc412e9f49b80b585d/angular.json#L25-L33) file.
+Add the following to the architect/build/options section of the [angular.json](https://github.com/epaitz/jsapi-angular-ngrx-ds2021/blob/f99bb2d7268a5ea8b47217cc412e9f49b80b585d/angular.json#L25-L33) file.
 
 ```
     "assets": [

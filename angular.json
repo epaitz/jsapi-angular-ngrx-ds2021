@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "jsapi-angular-ds2021": {
+    "jsapi-angular-ngrx-ds2021": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/jsapi-angular-ds2021",
+            "outputPath": "dist/jsapi-angular-ngrx-ds2021",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -71,18 +71,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "jsapi-angular-ds2021:build"
+            "browserTarget": "jsapi-angular-ngrx-ds2021:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "jsapi-angular-ds2021:build:production"
+              "browserTarget": "jsapi-angular-ngrx-ds2021:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "jsapi-angular-ds2021:build"
+            "browserTarget": "jsapi-angular-ngrx-ds2021:build"
           }
         },
         "test": {
@@ -120,16 +120,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "jsapi-angular-ds2021:serve"
+            "devServerTarget": "jsapi-angular-ngrx-ds2021:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "jsapi-angular-ds2021:serve:production"
+              "devServerTarget": "jsapi-angular-ngrx-ds2021:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "jsapi-angular-ds2021"
+  "defaultProject": "jsapi-angular-ngrx-ds2021"
 }
