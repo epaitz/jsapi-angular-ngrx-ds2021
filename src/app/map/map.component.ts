@@ -17,6 +17,7 @@ export class MapComponent implements OnInit, OnDestroy {
     public mode: string;
     public routeDataLabel: string;
     public sidenavOpened$: Observable<boolean>;
+
     private routeChildPath: string;
     private ngUnsubscribe: Subject<any> = new Subject();
 

@@ -3,7 +3,7 @@ import { cold, hot } from 'jasmine-marbles';
 
 describe('RouterService', () => {
     let routerService: RouterService;
-    let mockRouter: any
+    let mockRouter: any;
 
     beforeEach(() => {
         mockRouter = jasmine.createSpyObj('mockRouter', [''], { config: [] });
@@ -11,7 +11,7 @@ describe('RouterService', () => {
     });
 
     it('getRouterConfigMetadata_should_given', () => {
-        
+
         // Setup a response for the config property on mockRouter
         const config = [
             { path: 'home', data: { label: 'Home' }},
@@ -33,7 +33,7 @@ describe('RouterService', () => {
                 ]
             }
         ];
-        
+
         expect(JSON.stringify(routerConfigMetadata)).toBe(JSON.stringify(expectedRouteMetaData));
     });
 });

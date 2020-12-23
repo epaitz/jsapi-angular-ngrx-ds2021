@@ -1,0 +1,14 @@
+import WebMap from '@arcgis/core/WebMap';
+import { createAction, props } from '@ngrx/store';
+import { MapActionTypes } from './map.action.types';
+import { MapViewProperties } from '../shared/models/map-view-properties';
+
+export const GetWebMap = createAction(MapActionTypes.GetWebMap);
+export const GetWebMapCompleted = createAction(MapActionTypes.GetWebMapCompleted, props<{webMap: WebMap}>());
+export const GetWebMapError = createAction(MapActionTypes.GetWebMapError, props<{error: any}>());
+
+export const UpdateMapViewProperties = createAction(MapActionTypes.UpdateMapViewProperties, props<{mapViewProperties: MapViewProperties}>());
+
+export const SidenavToggle = createAction(MapActionTypes.SidenavToggle, props<{path: string}>());
+export const SidenavOpen = createAction(MapActionTypes.sidenavOpen);
+export const SidenavClose = createAction(MapActionTypes.SidenavClose);

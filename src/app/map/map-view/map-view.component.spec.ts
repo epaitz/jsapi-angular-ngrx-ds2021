@@ -14,7 +14,7 @@ describe('MapViewComponent', () => {
     beforeEach(async () => {
         mockMapService = jasmine.createSpyObj('mockMapService', ['getWebMapStatus', 'getWebMap', 'initializeWebMap']);
         mockMapFactory = jasmine.createSpyObj('mockMapFactory', ['initializeMapView', 'removeMapViewContainer']);
-        
+
         await TestBed.configureTestingModule({
             declarations: [
                 MapViewComponent

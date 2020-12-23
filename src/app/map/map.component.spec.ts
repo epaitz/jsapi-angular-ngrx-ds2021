@@ -16,7 +16,7 @@ describe('MapComponent', () => {
     let mockRouter: any;
 
     const eventsSubject = new ReplaySubject<any>(1);
-    mockRouter = {...mockRouter, events: eventsSubject.asObservable() }
+    mockRouter = {...mockRouter, events: eventsSubject.asObservable() };
 
     beforeEach(() => {
 
@@ -56,7 +56,7 @@ describe('MapComponent', () => {
         const snapshot = {routeConfig: {path: 'map'}, firstChild: {routeConfig: {path: 'search'}, data: {label: 'Search'}}};
         (Object.getOwnPropertyDescriptor(mockActivatedRoute, 'snapshot').get as any)
             .and.returnValue(snapshot);
-        
+
         // Setup a response for asObservable and isActive on mockMediaObserver
         mockMediaObserver.asObservable.and.returnValue(of({}));
         mockMediaObserver.isActive.and.returnValue(true);
@@ -65,7 +65,9 @@ describe('MapComponent', () => {
         componentFixture.detectChanges();
 
         expect(mapComponent.routeDataLabel).toBe('Search');
+        /* tslint:disable:no-string-literal */
         expect(mapComponent['routeChildPath']).toBe('/map/search');
+        /* tslint:enable:no-string-literal */
     });
 
     it('ngOnInit_shouldSetModeOver_givenMediaObserverIsActiveTrue', () => {
@@ -85,8 +87,8 @@ describe('MapComponent', () => {
         mockMediaObserver.isActive.and.returnValue(true);
 
         // mockMediaObserver.asObservable.and.returnValue(of({}));
-        // mockMediaObserver.isActive.and.callFake((value) => { 
-        //     return value === 'xs' || value === 'sm'; 
+        // mockMediaObserver.isActive.and.callFake((value) => {
+        //     return value === 'xs' || value === 'sm';
         // });
 
         // Call the method under test
@@ -114,8 +116,8 @@ describe('MapComponent', () => {
         mockMediaObserver.isActive.and.returnValue(false);
 
         // mockMediaObserver.asObservable.and.returnValue(of({}));
-        // mockMediaObserver.isActive.and.callFake((value) => { 
-        //     return value === 'xs' || value === 'sm'; 
+        // mockMediaObserver.isActive.and.callFake((value) => {
+        //     return value === 'xs' || value === 'sm';
         // });
 
         // Call the method under test

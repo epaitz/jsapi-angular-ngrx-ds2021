@@ -5,7 +5,7 @@ export interface RouterStateUrl {
   url: string;
   params: Params;
   queryParams: Params;
-  data: any
+  data: any;
 }
 
 export class CustomRouterStateSerializer implements RouterStateSerializer<RouterStateUrl> {

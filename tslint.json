@@ -4,6 +4,7 @@
     "codelyzer"
   ],
   "rules": {
+    "object-literal-shorthand": false,
     "align": {
       "options": [
         "parameters",

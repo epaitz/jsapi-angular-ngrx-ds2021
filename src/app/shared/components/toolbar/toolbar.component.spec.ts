@@ -20,8 +20,8 @@ describe('ToolbarComponent', () => {
         mockSidenavService = jasmine.createSpyObj('mockSidenavService', ['']);
 
         await TestBed.configureTestingModule({
-            declarations: [ 
-                ToolbarComponent 
+            declarations: [
+                ToolbarComponent
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA
@@ -52,49 +52,49 @@ describe('ToolbarComponent', () => {
     });
 
     it('ngOnInit_shouldInitializeButtons_givenRouterConfigWithChildren', () => {
-        
+
         const routerConfigMetadata = [
-            { path: 'home' }, 
+            { path: 'home' },
             {
-                path: 'map', 
+                path: 'map',
                 children: [
-                    {path: 'search', label: 'Search', icon:'search', fullPath: 'map/search'},
-                    {path: 'settings', label: 'Settings', icon:'settings', fullPath: 'map/settings'},
+                    {path: 'search', label: 'Search', icon: 'search', fullPath: 'map/search'},
+                    {path: 'settings', label: 'Settings', icon: 'settings', fullPath: 'map/settings'},
                 ]
-            }, 
+            },
             { path: 'tools' }
-        ]
+        ];
         mockRouterService.getRouterConfigMetadata.and.returnValue(routerConfigMetadata);
 
         toolbarComponent.routePath = 'map';
         toolbarComponent.settingsPath = 'settings';
-        
+
         // Call the method under test
         componentFixture.detectChanges();
 
-        const expectedButtons = [{id: 0, path: 'map/search', icon: 'search', label: 'Search', bottom: 48, visible: false}]
+        const expectedButtons = [{id: 0, path: 'map/search', icon: 'search', label: 'Search', bottom: 48, visible: false}];
         expect(JSON.stringify(toolbarComponent.buttons)).toBe(JSON.stringify(expectedButtons));
 
-        const expectedSettingsButton = {path: 'settings', icon: 'settings', label: 'Settings'}
+        const expectedSettingsButton = {path: 'settings', icon: 'settings', label: 'Settings'};
         expect(JSON.stringify(toolbarComponent.settingsButton)).toBe(JSON.stringify(expectedSettingsButton));
     });
 
     it('ngOnInit_shouldInitializeButtonsEmpty_givenRouterConfigWithNoChildren', () => {
-        
+
         const routerConfigMetadata = [
-            { path: 'home' }, 
-            { path: 'map', }, 
+            { path: 'home' },
+            { path: 'map', },
             { path: 'tools' }
-        ]
+        ];
         mockRouterService.getRouterConfigMetadata.and.returnValue(routerConfigMetadata);
 
         toolbarComponent.routePath = 'map';
         toolbarComponent.settingsPath = 'settings';
-        
+
         // Call the method under test
         componentFixture.detectChanges();
 
-        const expectedButtons = []
+        const expectedButtons = [];
         expect(JSON.stringify(toolbarComponent.buttons)).toBe(JSON.stringify(expectedButtons));
     });
 });
