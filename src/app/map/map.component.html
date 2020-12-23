@@ -1,5 +1,5 @@
 <div fxLayout="row" fxFill>
-    <app-toolbar orientation="vertical" routePath="map" settingsPath="settings" fxShow="true" fxHide.lt-md></app-toolbar>
+    <app-toolbar (sidenavToggle)="sidenavToggle($event)" [routerConfig]="routerConfig" orientation="vertical" routePath="map" settingsPath="settings" fxShow="true" fxHide.lt-md></app-toolbar>
     <mat-sidenav-container fxFlex="1 1 auto">
         <mat-sidenav #drawer [opened]="(sidenavOpened$ | async)" [mode]="mode" [class.is-xs]="isXs === true">
             <div fxLayout="column" fxFill>

@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ElementRef, Output, EventEmitter } from '@angular/core';
 import { RouteMetadata } from '../../models/route-metadata';
 import { RouterService } from '../../services/router.service';
-import { SidenavService } from '../../services/sidenav.service';
 
 @Component({
     selector: 'app-toolbar',
@@ -14,35 +13,34 @@ export class ToolbarComponent implements OnInit {
     public showButtonsFromRoute = false;
     public isOverflowVisible = false;
     public settingsButton: any;
-    private routerConfig: RouteMetadata[];
 
     @Input() orientation: string;
     @Input() routePath: string;
     @Input() settingsPath: string;
+    @Input() routerConfig: RouteMetadata[];
+
+    @Output() sidenavToggle: EventEmitter<string> = new EventEmitter();
 
     @HostListener('window:resize') onResize(): void {
         this.updateButtonVisibility();
     }
 
-    constructor(
-        private elementRef: ElementRef,
-        private routerService: RouterService,
-        private sideNavService: SidenavService) { }
+    constructor(private elementRef: ElementRef) { }
 
     ngOnInit(): void {
-        this.routerConfig = this.routerService.getRouterConfigMetadata();
         this.showButtonsFromRoute = (this.routePath != null);
         this.initializeButtonsFromRoute();
         this.initializeSettingsButton();
         this.updateButtonVisibility();
     }
 
-    sidenavToggle(path: string): void {
-        this.sideNavService.toggle(path);
+    onSidenavToggle(path: string): void {
+        this.sidenavToggle.emit(path);
     }
 
     private initializeButtonsFromRoute(): void {
         if (this.showButtonsFromRoute === false) { return; }
+        if (this.routerConfig == null) { return; }
 
         this.buttons = this.routerConfig
             .find((route: RouteMetadata) => {
@@ -65,6 +63,7 @@ export class ToolbarComponent implements OnInit {
 
     private initializeSettingsButton(): void {
         if (this.showButtonsFromRoute === false) { return; }
+        if (this.routerConfig == null) { return; }
 
         const settingsRoute = this.routerConfig
             .find((route: any) => {
@@ -86,6 +85,7 @@ export class ToolbarComponent implements OnInit {
 
     private updateButtonVisibility(): void {
         if (this.showButtonsFromRoute === false) { return; }
+        if (this.buttons == null) { return; }
 
         const height = this.elementRef.nativeElement.getBoundingClientRect().height;
 

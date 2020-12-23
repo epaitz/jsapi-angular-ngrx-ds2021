@@ -37,7 +37,6 @@ export class NavigationService {
         this.mapViewPropertiesSubject
             .pipe(debounceTime(150))
             .subscribe((mapViewProperties: MapViewProperties) => {
-                console.log(JSON.stringify(mapViewProperties, null, '\t'));
                 this.dispatchMapAction(MapActions.UpdateMapViewProperties({mapViewProperties: mapViewProperties}));
                 this.dispatchTriggeredByMap = false;
             });

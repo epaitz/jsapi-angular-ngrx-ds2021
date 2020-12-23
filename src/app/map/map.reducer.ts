@@ -22,9 +22,17 @@ const reducer = createReducer(
         return addWebMapToState(state, action.webMap);
     }),
     on(MapActions.UpdateMapViewProperties, (state, action) => {
-        console.log(action.mapViewProperties);
         return updateMapViewProperties(state, action.mapViewProperties);
-    })
+    }),
+    on(MapActions.SidenavToggle, (state, action) => {
+        return sidenavUpdateOpened(state, action.path);
+    }),
+    on(MapActions.SidenavOpen, (state, action) => {
+        return sidenavUpdateOpened(state, action.path, true);
+    }),
+    on(MapActions.SidenavClose, (state, action) => {
+        return sidenavUpdateOpened(state, action.path, false);
+    }),
 );
 
 function updateServiceStatus(state: MapState, type: ServiceStatusTypes, error?: any): MapState {
@@ -59,3 +67,13 @@ function updateMapViewProperties(state: MapState, mapViewProperties: MapViewProp
 //     };
 //     return stateWithoutRequest;
 // }
+
+function sidenavUpdateOpened(state: MapState, path: string, opened?: boolean): MapState {
+    return {
+        ...state,
+        sidenav: {
+            opened: (opened == null ? !state.sidenav.opened : opened),
+            path: path
+        }
+    };
+}

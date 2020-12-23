@@ -1,9 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
-import { SidenavService } from '../shared/services/sidenav.service';
+import { takeUntil } from 'rxjs/operators';
+import { AppState } from '../app.state';
+import { selectRouterState, selectSidenavOpened } from './map.selectors';
+import * as MapActions from './map.actions';
+import { RouterService } from '../shared/services/router.service';
+import { RouteMetadata } from '../shared/models/route-metadata';
 
 @Component({
     selector: 'app-map-component',
@@ -16,27 +20,29 @@ export class MapComponent implements OnInit, OnDestroy {
     public isSm = false;
     public mode: string;
     public routeDataLabel: string;
+    public routerConfig: RouteMetadata[];
     public sidenavOpened$: Observable<boolean>;
 
-    private routeChildPath: string;
+    private routeChildUrl: string;
     private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(
-        private sidenavService: SidenavService,
+        private store: Store<AppState>,
         private mediaObserver: MediaObserver,
-        private activatedRoute: ActivatedRoute,
-        private router: Router) { }
+        private routerService: RouterService) { }
 
     ngOnInit(): void {
 
-        this.updateRouteDataLabel();
-        this.router.events
-            .pipe(filter((event) => event instanceof NavigationEnd ))
-            .subscribe(() => {
-                this.updateRouteDataLabel();
+        this.routerConfig = this.routerService.getRouterConfigMetadata();
+
+        this.sidenavOpened$ = this.store.select(selectSidenavOpened);
+
+        this.store.select(selectRouterState)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((state) => {
+                this.routeChildUrl = state.state.url;
             });
 
-        this.sidenavOpened$ = this.sidenavService.getSidenavOpened();
         this.mediaObserver.asObservable()
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe(() => {
@@ -44,10 +50,10 @@ export class MapComponent implements OnInit, OnDestroy {
                 this.isSm = this.mediaObserver.isActive('sm');
                 if (this.isXs || this.isSm) {
                     this.mode = 'over';
-                    this.sidenavService.close(this.routeChildPath);
+                    this.store.dispatch(MapActions.SidenavClose({path: this.routeChildUrl}));
                 } else {
                     this.mode = 'side';
-                    this.sidenavService.open(this.routeChildPath);
+                    this.store.dispatch(MapActions.SidenavOpen({path: this.routeChildUrl}));
                 }
             });
     }
@@ -57,13 +63,11 @@ export class MapComponent implements OnInit, OnDestroy {
         this.ngUnsubscribe.complete();
     }
 
-    sidenavClose(): void {
-        this.sidenavService.close(this.routeChildPath);
+    sidenavToggle(path: string): void {
+        this.store.dispatch(MapActions.SidenavToggle({path: path}));
     }
 
-    private updateRouteDataLabel(): void {
-        const snapshot = this.activatedRoute.snapshot;
-        this.routeChildPath = '/' + snapshot.routeConfig.path + '/' + snapshot.firstChild.routeConfig.path;
-        this.routeDataLabel = snapshot.firstChild.data.label;
+    sidenavClose(): void {
+        this.store.dispatch(MapActions.SidenavClose({path: this.routeChildUrl}));
     }
 }

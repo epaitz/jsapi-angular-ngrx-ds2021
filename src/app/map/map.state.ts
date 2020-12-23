@@ -6,4 +6,8 @@ export interface MapState {
     status: ServiceStatus;
     webMap?: WebMap;
     mapViewProperties?: MapViewProperties;
+    sidenav?: {
+        opened: boolean,
+        path: string
+    };
 }

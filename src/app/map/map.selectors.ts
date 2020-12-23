@@ -24,3 +24,12 @@ export const selectMapViewPropertiesExtent = createSelector(
         return state?.mapViewProperties?.extent;
     }
 );
+
+export const selectSidenavOpened = createSelector(
+    selectMapState,
+    (state: MapState) => {
+        return state?.sidenav?.opened;
+    }
+);
+
+export const selectRouterState = (state: AppState) => state.router;

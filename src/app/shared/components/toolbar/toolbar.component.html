@@ -7,7 +7,7 @@
             <ng-container *ngIf="showButtonsFromRoute === true">
                 <ng-container *ngFor="let button of buttons">
                     <ng-container *ngIf="button.visible === true">
-                        <button id={{button.id}} mat-button (click)="sidenavToggle(button.path)" 
+                        <button id={{button.id}} mat-button (click)="onSidenavToggle(button.path)" 
                                 routerLink={{button.path}} title="{{button.label}}" routerLinkActive="active"
                                 style="height: 48px;">
                             <mat-icon>{{button.icon}}</mat-icon>
