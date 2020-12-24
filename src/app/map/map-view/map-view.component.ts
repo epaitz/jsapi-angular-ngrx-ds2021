@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 import { AppState } from 'src/app/app.state';
 import { ServiceStatus } from 'src/app/shared/models/service-status';
 import * as MapActions from '../map.actions';
@@ -18,6 +18,8 @@ export class MapViewComponent implements OnInit, OnDestroy {
     @ViewChild('mapViewDiv', { static: true }) private elementRef: ElementRef;
 
     public serviceStatus$: Observable<ServiceStatus>;
+    
+    private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(
         private store: Store<AppState>,
@@ -25,10 +27,11 @@ export class MapViewComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
 
-        this.serviceStatus$ = this.store.select(selectWebMapStatus);
+        this.serviceStatus$ = this.store.pipe(select(selectWebMapStatus));
 
         this.store.select(selectWebMap)
             .pipe(filter(webMap => webMap != null))
+            .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((webMap) => {
                 this.mapFactory.initializeMapView(this.elementRef, webMap);
             });
@@ -37,10 +40,12 @@ export class MapViewComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
         this.mapFactory.removeMapViewContainer(this.elementRef);
     }
 
     refresh(): void {
-
+        this.store.dispatch(MapActions.GetWebMap());
     }
 }

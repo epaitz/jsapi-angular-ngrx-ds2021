@@ -11,7 +11,7 @@ import { RestResponse } from '../models/rest-response';
 export class HttpClientService {
     constructor(private httpClient: HttpClient) {}
 
-    public get<T>(url: string, options?: {}): Observable<T> {
+    public getIt<T>(url: string, options?: {}): Observable<T> {
         return this.httpClient
             .get<RestResponse<T>>(url, options)
             .pipe(
@@ -29,7 +29,7 @@ export class HttpClientService {
             );
     }
 
-    public getIt<T>(url: string, options?: {}): Observable<T> {
+    public get<T>(url: string, options?: {}): Observable<T> {
         return this.httpClient
             .get<T>(url, options)
             .pipe(

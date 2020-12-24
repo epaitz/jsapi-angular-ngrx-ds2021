@@ -29,8 +29,4 @@ describe('AppComponent', () => {
     it('should create the app', () => {
         expect(appComponent).toBeTruthy();
     });
-
-    // it('should have as title \'jsapi-angular-ngrx-ds2021\'', () => {
-    // expect(appComponent.title).toEqual('jsapi-angular-ngrx-ds2021');
-    // });
 });

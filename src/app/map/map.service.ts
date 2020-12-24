@@ -11,6 +11,6 @@ export class MapService {
     constructor(private httpClientService: HttpClientService) { }
 
     getWebMap(): Observable<WebMap> {
-        return this.httpClientService.getIt<WebMap>('api/webmap');
+        return this.httpClientService.get<WebMap>('api/webmap');
     }
 }

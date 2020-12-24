@@ -13,5 +13,5 @@ export const UpdateMapViewProperties = createAction(
 );
 
 export const SidenavToggle = createAction(MapActionTypes.SidenavToggle, props<{path: string}>());
-export const SidenavOpen = createAction(MapActionTypes.sidenavOpen, props<{path: string}>());
+export const SidenavOpen = createAction(MapActionTypes.SidenavOpen, props<{path: string}>());
 export const SidenavClose = createAction(MapActionTypes.SidenavClose, props<{path: string}>());

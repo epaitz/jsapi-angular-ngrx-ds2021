@@ -1,33 +1,37 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
 import { MapFactory } from '../map.factory';
-import { MapService } from '../map.service';
 import { MapViewComponent } from './map-view.component';
+import { cold, hot } from 'jasmine-marbles';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { MapActionTypes } from '../map.action.types';
 
 describe('MapViewComponent', () => {
     let mapViewComponent: MapViewComponent;
     let componentFixture: ComponentFixture<MapViewComponent>;
-    let mockMapService: any;
+    let mockStore: any;
     let mockMapFactory: any;
 
+    const initialState = { };
+
     beforeEach(async () => {
-        mockMapService = jasmine.createSpyObj('mockMapService', ['getWebMapStatus', 'getWebMap', 'initializeWebMap']);
         mockMapFactory = jasmine.createSpyObj('mockMapFactory', ['initializeMapView', 'removeMapViewContainer']);
 
         await TestBed.configureTestingModule({
             declarations: [
                 MapViewComponent
             ],
-                schemas: [
+            schemas: [
                 CUSTOM_ELEMENTS_SCHEMA
             ],
             providers: [
-                { provide: MapService, useValue: mockMapService },
+                provideMockStore({ initialState }),
                 { provide: MapFactory, useValue: mockMapFactory }
             ]
         })
         .compileComponents();
+
+        mockStore = TestBed.inject(MockStore);
     });
 
     beforeEach(() => {
@@ -35,17 +39,79 @@ describe('MapViewComponent', () => {
         mapViewComponent = componentFixture.componentInstance;
     });
 
-    it('ngOnInit_shouldInitializeWebMap', () => {
+    it ('ngOnInit_shouldInitializeServiceStatus', () => {
 
-        const serviceStatus = {};
-        mockMapService.getWebMapStatus.and.returnValue(of(serviceStatus));
+        // Define the app state in the store
+        mockStore.setState({ mapState: { status: { type: 'loading'}}});
 
-        const webMap = {};
-        mockMapService.getWebMap.and.returnValue(of(webMap));
+        // Call the method under test
+        componentFixture.detectChanges();
 
+        const expected = cold('(a)', { a: { type: 'loading' } });
+        expect(mapViewComponent.serviceStatus$).toBeObservable(expected);
+    });
+
+    it ('ngOnInit_shouldDispatchGetWebMap_andCallInitializeMapView_givenWebMap', () => {
+
+        spyOn(mockStore, 'dispatch').and.callThrough();
+
+        // Define the app state in the store
+        mockStore.setState({ mapState: { webMap: {}}});
+
+        // Call the method under test
         componentFixture.detectChanges();
 
         expect(mockMapFactory.initializeMapView).toHaveBeenCalledTimes(1);
-        expect(mockMapService.initializeWebMap).toHaveBeenCalledTimes(1);
+        expect(mockStore.dispatch).toHaveBeenCalledWith({ type: MapActionTypes.GetWebMap });
+    });
+
+    it ('ngOnInit_shouldNotDispatchGetWebMap_andCallInitializeMapView_givenNullWebMap', () => {
+
+        spyOn(mockStore, 'dispatch').and.callThrough();
+
+        // Define the app state in the store
+        mockStore.setState({ mapState: { webMap: null}});
+
+        // Call the method under test
+        componentFixture.detectChanges();
+
+        expect(mockMapFactory.initializeMapView).toHaveBeenCalledTimes(0);
+        expect(mockStore.dispatch).toHaveBeenCalledWith({ type: MapActionTypes.GetWebMap });
+    });
+
+    it('refresh_should_given', () => {
+
+        spyOn(mockStore, 'dispatch').and.callThrough();
+
+        // Call the method under test
+        mapViewComponent.refresh();
+
+        expect(mockStore.dispatch).toHaveBeenCalledWith({ type: MapActionTypes.GetWebMap });
+    });
+
+    it('ngOnDestroy_shouldCallRemoveMapViewContainer', () => {
+
+        // Initialize the component
+        componentFixture.detectChanges();
+
+        // Call the method under test
+        componentFixture.destroy();
+
+        expect(mockMapFactory.removeMapViewContainer).toHaveBeenCalledTimes(1);
+    });
+
+    it('ngOnDestroy_shouldUnsubscribe', () => {
+
+        spyOn(mapViewComponent['ngUnsubscribe'], 'next').and.callThrough();
+        spyOn(mapViewComponent['ngUnsubscribe'], 'complete').and.callThrough();
+
+        // Initialize the component
+        componentFixture.detectChanges();
+
+        // Call the method under test
+        componentFixture.destroy();
+
+        expect(mapViewComponent['ngUnsubscribe'].next).toHaveBeenCalledTimes(1);
+        expect(mapViewComponent['ngUnsubscribe'].complete).toHaveBeenCalledTimes(1);
     });
 });

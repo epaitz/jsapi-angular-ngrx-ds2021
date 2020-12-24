@@ -9,32 +9,20 @@ describe('MapService', () => {
     let mockHttpService: any;
 
     beforeEach(() => {
-        mockHttpService = jasmine.createSpyObj('mockHttpService', ['getIt']);
+        mockHttpService = jasmine.createSpyObj('mockHttpService', ['get']);
         mapService = new MapService(mockHttpService);
     });
 
-    it('getWebMapStatus_shouldReturnLoadingContentServiceStatus', (done) => {
+    it('getWebMap_shouldReturnWebMap', (done) => {
 
-        let count = 0;
         const webMap = {};
-        mockHttpService.getIt.and.returnValue(of(webMap));
+        mockHttpService.get.and.returnValue(of(webMap));
 
         mapService
-            .getWebMapStatus()
-            .subscribe((serviceStatus: ServiceStatus) => {
-
-                if (count === 0) {
-                    expect(serviceStatus.type).toBe(ServiceStatusTypes.loading);
-                }
-
-                if (count === 1) {
-                    expect(serviceStatus.type).toBe(ServiceStatusTypes.content);
-                    done();
-                }
-
-                count++;
+            .getWebMap()
+            .subscribe((x) => {
+                expect(JSON.stringify(webMap)).toBe(JSON.stringify(x));
+                done();
             });
-
-        mapService.initializeWebMap();
     });
 });

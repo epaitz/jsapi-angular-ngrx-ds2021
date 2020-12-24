@@ -1,31 +1,28 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MediaObserver } from '@angular/flex-layout';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { of, ReplaySubject } from 'rxjs';
-import { SidenavService } from '../shared/services/sidenav.service';
 import { MapComponent } from './map.component';
 import { cold, hot } from 'jasmine-marbles';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { RouterService } from '../shared/services/router.service';
+import { of } from 'rxjs';
+import MapView from '@arcgis/core/views/MapView';
+import { MapActionTypes } from './map.action.types';
 
 describe('MapComponent', () => {
     let mapComponent: MapComponent;
     let componentFixture: ComponentFixture<MapComponent>;
-    let mockSidenavService: any;
     let mockMediaObserver: any;
-    let mockActivatedRoute: any;
-    let mockRouter: any;
+    let mockRouterService: any;
+    let mockStore: any;
 
-    const eventsSubject = new ReplaySubject<any>(1);
-    mockRouter = {...mockRouter, events: eventsSubject.asObservable() };
+    const initialState = { };
 
-    beforeEach(() => {
-
-        mockSidenavService = jasmine.createSpyObj('mockSidenavService', ['getSidenavOpened', 'close', 'open']);
+    beforeEach(async () => {
         mockMediaObserver = jasmine.createSpyObj('mockMediaObserver', ['asObservable', 'isActive']);
-        mockActivatedRoute = jasmine.createSpyObj('mockActivatedRoute', [''], { snapshot: null });
-        mockRouter = jasmine.createSpyObj('mockRouter', [''], { events: of({}) });
+        mockRouterService = jasmine.createSpyObj('mockRouterService', ['getRouterConfigMetadata']);
 
-        TestBed.configureTestingModule({
+        await TestBed.configureTestingModule({
             declarations: [
                 MapComponent
             ],
@@ -33,154 +30,180 @@ describe('MapComponent', () => {
                 CUSTOM_ELEMENTS_SCHEMA
             ],
             providers: [
-                { provide: SidenavService, useValue: mockSidenavService },
+                provideMockStore({ initialState }),
                 { provide: MediaObserver, useValue: mockMediaObserver },
-                { provide: ActivatedRoute, useValue: mockActivatedRoute },
-                { provide: Router, useValue: mockRouter }
+                { provide: RouterService, useValue: mockRouterService }
             ]
         })
         .compileComponents();
 
+        mockStore = TestBed.inject(MockStore);
+    });
+
+    beforeEach(() => {
         componentFixture = TestBed.createComponent(MapComponent);
         mapComponent = componentFixture.componentInstance;
     });
 
-    it('ngOnInit_shouldSetRouteDataLabel_givenActivatedRoute', () => {
+    it('ngOnInit_shouldSetRouterConfig', () => {
 
-        // Setup a response for the events property on mockRouter
-        const event = new NavigationEnd(0, '', '');
-        (Object.getOwnPropertyDescriptor(mockRouter, 'events').get as any)
-            .and.returnValue(of(event));
-
-        // Setup a response for the snapshot property on mockActivatedRoute
-        const snapshot = {routeConfig: {path: 'map'}, firstChild: {routeConfig: {path: 'search'}, data: {label: 'Search'}}};
-        (Object.getOwnPropertyDescriptor(mockActivatedRoute, 'snapshot').get as any)
-            .and.returnValue(snapshot);
+        // Define the app state in the store
+        mockStore.setState({ router: { state: { ulr: '/map/search'}}});
 
         // Setup a response for asObservable and isActive on mockMediaObserver
         mockMediaObserver.asObservable.and.returnValue(of({}));
         mockMediaObserver.isActive.and.returnValue(true);
 
+        // Setup a response for getRouterConfigMetadata
+        const routerConfig = [];
+        mockRouterService.getRouterConfigMetadata.and.returnValue(routerConfig);
+
         // Call the method under test
         componentFixture.detectChanges();
 
-        expect(mapComponent.routeDataLabel).toBe('Search');
-        /* tslint:disable:no-string-literal */
-        expect(mapComponent['routeChildPath']).toBe('/map/search');
-        /* tslint:enable:no-string-literal */
+        expect(JSON.stringify(mapComponent.routerConfig)).toBe(JSON.stringify(routerConfig));
     });
 
-    it('ngOnInit_shouldSetModeOver_givenMediaObserverIsActiveTrue', () => {
+    it('ngOnInit_shouldSidenavOpened', () => {
 
-        // Setup a response for the events property on mockRouter
-        const event = new NavigationEnd(0, '', '');
-        (Object.getOwnPropertyDescriptor(mockRouter, 'events').get as any)
-            .and.returnValue(of(event));
-
-        // Setup a response for the snapshot property on mockActivatedRoute
-        const snapshot = {routeConfig: {path: 'map'}, firstChild: {routeConfig: {path: 'search'}, data: {label: 'Search'}}};
-        (Object.getOwnPropertyDescriptor(mockActivatedRoute, 'snapshot').get as any)
-            .and.returnValue(snapshot);
+        mockStore.setState(
+            { 
+                mapState: { 
+                    sidenav: {
+                        opened: true, 
+                        path: '/map/search'
+                    }
+                }, 
+                router: { 
+                    state: { 
+                        ulr: '/map/search'
+                    }
+                }
+            });
 
         // Setup a response for asObservable and isActive on mockMediaObserver
         mockMediaObserver.asObservable.and.returnValue(of({}));
         mockMediaObserver.isActive.and.returnValue(true);
 
-        // mockMediaObserver.asObservable.and.returnValue(of({}));
-        // mockMediaObserver.isActive.and.callFake((value) => {
-        //     return value === 'xs' || value === 'sm';
-        // });
+        // Setup a response for getRouterConfigMetadata
+        const routerConfig = [];
+        mockRouterService.getRouterConfigMetadata.and.returnValue(routerConfig);
 
         // Call the method under test
         componentFixture.detectChanges();
 
+        const expected = cold('(a)', { a: true });
+        expect(mapComponent.sidenavOpened$).toBeObservable(expected);
+    });
+
+    it('ngOnInit_shouldSetModeOver_andDispatchSidenavClose_givenMediaObserverIsActiveTrue', () => {
+
+        spyOn(mockStore, 'dispatch').and.callThrough();
+
+        // Define the app state in the store
+        mockStore.setState({ router: { state: { url: '/map/search'}}});
+
+        // Setup a response for asObservable and isActive on mockMediaObserver
+        mockMediaObserver.asObservable.and.returnValue(of({}));
+        mockMediaObserver.isActive.and.returnValue(true);
+
+        // Setup a response for getRouterConfigMetadata
+        const routerConfig = [];
+        mockRouterService.getRouterConfigMetadata.and.returnValue(routerConfig);
+
+        // Call the method under test
+        componentFixture.detectChanges();
+
+        expect(mapComponent.isXs).toBe(true);
+        expect(mapComponent.isSm).toBe(true);
         expect(mapComponent.mode).toBe('over');
-        expect(mockSidenavService.close).toHaveBeenCalledTimes(1);
-        expect(mockSidenavService.open).toHaveBeenCalledTimes(0);
+        expect(mockStore.dispatch).toHaveBeenCalledOnceWith({ type: MapActionTypes.SidenavClose, path: '/map/search' });
     });
+    
+    it('ngOnInit_shouldSetModeSide_andDispatchSidenavOpen_givenMediaObserverIsActiveFalse', () => {
 
-    it('ngOnInit_shouldSetModeSide_givenMediaObserverIsActiveFalse', () => {
+        spyOn(mockStore, 'dispatch').and.callThrough();
 
-        // Setup a response for the events property on mockRouter
-        const event = new NavigationEnd(0, '', '');
-        (Object.getOwnPropertyDescriptor(mockRouter, 'events').get as any)
-            .and.returnValue(of(event));
-
-        // Setup a response for the snapshot property on mockActivatedRoute
-        const snapshot = {routeConfig: {path: 'map'}, firstChild: {routeConfig: {path: 'search'}, data: {label: 'Search'}}};
-        (Object.getOwnPropertyDescriptor(mockActivatedRoute, 'snapshot').get as any)
-            .and.returnValue(snapshot);
+        // Define the app state in the store
+        mockStore.setState({ router: { state: { url: '/map/search'}}});
 
         // Setup a response for asObservable and isActive on mockMediaObserver
         mockMediaObserver.asObservable.and.returnValue(of({}));
         mockMediaObserver.isActive.and.returnValue(false);
 
-        // mockMediaObserver.asObservable.and.returnValue(of({}));
-        // mockMediaObserver.isActive.and.callFake((value) => {
-        //     return value === 'xs' || value === 'sm';
-        // });
+        // Setup a response for getRouterConfigMetadata
+        const routerConfig = [];
+        mockRouterService.getRouterConfigMetadata.and.returnValue(routerConfig);
 
         // Call the method under test
         componentFixture.detectChanges();
 
+        expect(mapComponent.isXs).toBe(false);
+        expect(mapComponent.isSm).toBe(false);
         expect(mapComponent.mode).toBe('side');
-        expect(mockSidenavService.close).toHaveBeenCalledTimes(0);
-        expect(mockSidenavService.open).toHaveBeenCalledTimes(1);
+        expect(mockStore.dispatch).toHaveBeenCalledOnceWith({ type: MapActionTypes.SidenavOpen, path: '/map/search' });
     });
 
-    it('ngOnInit_shouldGetSidenaveOpened()', () => {
+    it('ngOnDestroy_shouldUnsubscribe', () => {
 
-        // Setup a response for the events property on mockRouter
-        const event = new NavigationEnd(0, '', '');
-        (Object.getOwnPropertyDescriptor(mockRouter, 'events').get as any)
-            .and.returnValue(of(event));
-
-        // Setup a response for the snapshot property on mockActivatedRoute
-        const snapshot = {routeConfig: {path: 'map'}, firstChild: {routeConfig: {path: 'search'}, data: {label: 'Search'}}};
-        (Object.getOwnPropertyDescriptor(mockActivatedRoute, 'snapshot').get as any)
-            .and.returnValue(snapshot);
+        // Define the app state in the store
+        mockStore.setState({ router: { state: { ulr: '/map/search'}}});
 
         // Setup a response for asObservable and isActive on mockMediaObserver
         mockMediaObserver.asObservable.and.returnValue(of({}));
-        mockMediaObserver.isActive.and.returnValue(false);
+        mockMediaObserver.isActive.and.returnValue(true);
 
-        const sidenavOpened = true;
-        mockSidenavService.getSidenavOpened.and.returnValue(of(sidenavOpened));
+        // Setup a response for getRouterConfigMetadata
+        const routerConfig = [];
+        mockRouterService.getRouterConfigMetadata.and.returnValue(routerConfig);
+
+        spyOn(mapComponent['ngUnsubscribe'], 'next').and.callThrough();
+        spyOn(mapComponent['ngUnsubscribe'], 'complete').and.callThrough();
+
+        // Initialize the component
+        componentFixture.detectChanges();
 
         // Call the method under test
-        componentFixture.detectChanges();
+        componentFixture.destroy();
 
-        // Expect the sidenavOpened$ be an Observable of true (hot and cold both work)
-        expect(mapComponent.sidenavOpened$).toBeObservable(cold('(a|)', {a: true}));
-        expect(mapComponent.sidenavOpened$).toBeObservable(hot('(a|)', {a: true}));
+        expect(mapComponent['ngUnsubscribe'].next).toHaveBeenCalledTimes(1);
+        expect(mapComponent['ngUnsubscribe'].complete).toHaveBeenCalledTimes(1);
     });
 
-    it('sidenavClose_shouldSidenaveServiceClose', () => {
+    it('sidenavToggle_shouldDispatchSidenavToggle', () => {
 
-        // Setup a response for the events property on mockRouter
-        const event = new NavigationEnd(0, '', '');
-        (Object.getOwnPropertyDescriptor(mockRouter, 'events').get as any)
-            .and.returnValue(of(event));
+        spyOn(mockStore, 'dispatch').and.callThrough();
 
-        // Setup a response for the snapshot property on mockActivatedRoute
-        const snapshot = {routeConfig: {path: 'map'}, firstChild: {routeConfig: {path: 'search'}, data: {label: 'Search'}}};
-        (Object.getOwnPropertyDescriptor(mockActivatedRoute, 'snapshot').get as any)
-            .and.returnValue(snapshot);
+        const path = '/map/search';
+
+        // Call the method under test
+        mapComponent.sidenavToggle(path);
+
+        expect(mockStore.dispatch).toHaveBeenCalledOnceWith({ type: MapActionTypes.SidenavToggle, path: '/map/search'})
+    });
+
+    it('sidenavClose_shouldDispatchSidenavClose', () => {
+
+        // Define the app state in the store
+        mockStore.setState({ router: { state: { url: '/map/search'}}});
 
         // Setup a response for asObservable and isActive on mockMediaObserver
         mockMediaObserver.asObservable.and.returnValue(of({}));
         mockMediaObserver.isActive.and.returnValue(false);
 
-        const sidenavOpened = true;
-        mockSidenavService.getSidenavOpened.and.returnValue(of(sidenavOpened));
+        // Setup a response for getRouterConfigMetadata
+        const routerConfig = [];
+        mockRouterService.getRouterConfigMetadata.and.returnValue(routerConfig);
 
-        // Start component life-cycle
+        // Initlize the component
         componentFixture.detectChanges();
+
+        // SpyOn dispatch after detectChanges (i.e. ngOnInit())
+        spyOn(mockStore, 'dispatch').and.callThrough();
 
         // Call the method under test
         mapComponent.sidenavClose();
 
-        expect(mockSidenavService.close).toHaveBeenCalledTimes(1);
-        expect(mockSidenavService.close).toHaveBeenCalledWith('/map/search');
+        expect(mockStore.dispatch).toHaveBeenCalledOnceWith({ type: MapActionTypes.SidenavClose, path: '/map/search'})
     });
 });

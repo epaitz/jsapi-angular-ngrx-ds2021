@@ -1,23 +1,18 @@
 import { CUSTOM_ELEMENTS_SCHEMA, ElementRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
-import { of } from 'rxjs';
-import { RouterService } from '../../services/router.service';
-import { SidenavService } from '../../services/sidenav.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { RouteMetadata } from '../../models/route-metadata';
 import { ToolbarComponent } from './toolbar.component';
 
 describe('ToolbarComponent', () => {
     let toolbarComponent: ToolbarComponent;
     let componentFixture: ComponentFixture<ToolbarComponent>;
     let mockElementRef: any;
-    let mockRouterService: any;
-    let mockSidenavService: any;
 
     beforeEach(async () => {
 
         mockElementRef = jasmine.createSpyObj('mockElementRef', ['']);
-        mockRouterService = jasmine.createSpyObj('mockRouterService', ['getRouterConfigMetadata']);
-        mockSidenavService = jasmine.createSpyObj('mockSidenavService', ['']);
 
         await TestBed.configureTestingModule({
             declarations: [
@@ -27,11 +22,10 @@ describe('ToolbarComponent', () => {
                 CUSTOM_ELEMENTS_SCHEMA
             ],
             providers: [
-                { provide: ElementRef, useValue: mockElementRef },
-                { provide: RouterService, useValue: mockRouterService },
-                { provide: SidenavService, useValue: mockSidenavService }
+                { provide: ElementRef, useValue: mockElementRef }
             ],
             imports: [
+                RouterTestingModule,
                 MatMenuModule
             ]
         })
@@ -54,20 +48,16 @@ describe('ToolbarComponent', () => {
     it('ngOnInit_shouldInitializeButtons_givenRouterConfigWithChildren', () => {
 
         const routerConfigMetadata = [
-            { path: 'home' },
-            {
-                path: 'map',
-                children: [
-                    {path: 'search', label: 'Search', icon: 'search', fullPath: 'map/search'},
-                    {path: 'settings', label: 'Settings', icon: 'settings', fullPath: 'map/settings'},
-                ]
-            },
-            { path: 'tools' }
+            new RouteMetadata('Home', 'home', 'home'),
+            new RouteMetadata('Map', 'map', 'map', null, [
+                new RouteMetadata('Search', 'search', 'map/search', 'search'),
+                new RouteMetadata('Settings', 'settings', 'map/settings', 'settings')
+            ]),
         ];
-        mockRouterService.getRouterConfigMetadata.and.returnValue(routerConfigMetadata);
 
         toolbarComponent.routePath = 'map';
         toolbarComponent.settingsPath = 'settings';
+        toolbarComponent.routerConfig = routerConfigMetadata;
 
         // Call the method under test
         componentFixture.detectChanges();
@@ -82,19 +72,32 @@ describe('ToolbarComponent', () => {
     it('ngOnInit_shouldInitializeButtonsEmpty_givenRouterConfigWithNoChildren', () => {
 
         const routerConfigMetadata = [
-            { path: 'home' },
-            { path: 'map', },
-            { path: 'tools' }
+            new RouteMetadata('Home', 'home', 'home'),
+            new RouteMetadata('Map', 'map', 'map'),
+            new RouteMetadata('Tools', 'tools', 'tools')
         ];
-        mockRouterService.getRouterConfigMetadata.and.returnValue(routerConfigMetadata);
 
         toolbarComponent.routePath = 'map';
         toolbarComponent.settingsPath = 'settings';
+        toolbarComponent.routerConfig = routerConfigMetadata;
 
         // Call the method under test
         componentFixture.detectChanges();
 
         const expectedButtons = [];
         expect(JSON.stringify(toolbarComponent.buttons)).toBe(JSON.stringify(expectedButtons));
+    });
+
+    it('onSidenavToggle_should_given', () => {
+
+        spyOn(toolbarComponent.sidenavToggle, 'emit').and.callThrough();
+
+        const path = 'map';
+
+        // Call the method under test
+        toolbarComponent.onSidenavToggle(path);
+
+        expect(toolbarComponent.sidenavToggle.emit).toHaveBeenCalledTimes(1);
+        expect(toolbarComponent.sidenavToggle.emit).toHaveBeenCalledWith(path);
     });
 });

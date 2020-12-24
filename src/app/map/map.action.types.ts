@@ -4,6 +4,6 @@ export enum MapActionTypes {
     GetWebMapError = 'GET_ WEBMAP_ERROR',
     UpdateMapViewProperties = 'UPDATE_MAP_VIEW_PROPERTIES',
     SidenavToggle = 'SIDENAV_TOGGLE',
-    sidenavOpen = 'SIDENAV_OPEN',
+    SidenavOpen = 'SIDENAV_OPEN',
     SidenavClose = 'SIDENAV_CLOSE'
 }
