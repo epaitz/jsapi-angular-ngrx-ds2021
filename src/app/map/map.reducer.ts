@@ -19,7 +19,7 @@ const reducer = createReducer(
         return updateServiceStatus(state, ServiceStatusTypes.loading);
     }),
     on(MapActions.GetWebMapCompleted, (state, action) => {
-        return addWebMapToState(state, action.webMap);
+        return addWebMapToState(state, action.webMapDocument);
     }),
     on(MapActions.UpdateMapViewProperties, (state, action) => {
         return updateMapViewProperties(state, action.mapViewProperties);

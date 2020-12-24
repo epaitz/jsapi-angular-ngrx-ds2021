@@ -1,10 +1,10 @@
-import WebMap from '@arcgis/core/WebMap';
 import { createAction, props } from '@ngrx/store';
 import { MapActionTypes } from './map.action.types';
 import { MapViewProperties } from '../shared/models/map-view-properties';
+import { WebMapDocument } from '../shared/models/webmap-document';
 
 export const GetWebMap = createAction(MapActionTypes.GetWebMap);
-export const GetWebMapCompleted = createAction(MapActionTypes.GetWebMapCompleted, props<{webMap: WebMap}>());
+export const GetWebMapCompleted = createAction(MapActionTypes.GetWebMapCompleted, props<{webMapDocument: WebMapDocument}>());
 export const GetWebMapError = createAction(MapActionTypes.GetWebMapError, props<{error: any}>());
 
 export const UpdateMapViewProperties = createAction(

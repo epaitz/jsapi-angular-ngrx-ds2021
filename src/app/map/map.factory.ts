@@ -2,6 +2,7 @@ import { Injectable, ElementRef, Renderer2, RendererFactory2 } from '@angular/co
 import MapView from '@arcgis/core/views/MapView';
 import WebMap from '@arcgis/core/WebMap';
 import { Observable, ReplaySubject } from 'rxjs';
+import { WebMapDocument } from '../shared/models/webmap-document';
 
 @Injectable({
     providedIn: 'root',
@@ -22,9 +23,9 @@ export class MapFactory {
         return this.mapViewSubject.asObservable();
     }
 
-    public initializeMapView(elementRef: ElementRef, webMap: any): MapView {
+    public initializeMapView(elementRef: ElementRef, webMapDocument: WebMapDocument): MapView {
         this.createMapViewContainer(elementRef);
-        this.createWebMap(webMap);
+        this.createWebMap(webMapDocument);
         this.createMapView();
         this.mapViewSubject.next(this.mapView);
         return this.mapView;
@@ -40,13 +41,13 @@ export class MapFactory {
         this.renderer.appendChild(elementRef.nativeElement, this.mapViewContainer);
     }
 
-    private createWebMap(json: any): void {
+    private createWebMap(webMapDocument: WebMapDocument): void {
         if (this.webMap == null) {
 
             // The JSON from NgRx is immutable the WebMap.fromJSON() validates the JSON
             // and removes whitespace so we are uisng parse/stringify to make a clone.
             // This should be fixed in a future version of the JSAPI.
-            this.webMap = WebMap.fromJSON(JSON.parse(JSON.stringify(json)));
+            this.webMap = WebMap.fromJSON(JSON.parse(JSON.stringify(webMapDocument)));
         }
     }
 

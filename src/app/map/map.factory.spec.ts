@@ -1,5 +1,6 @@
 import { MapFactory } from './map.factory';
 import config from '@arcgis/core/config.js';
+import { WebMapDocument } from '../shared/models/webmap-document';
 
 describe('MapFactory', () => {
 
@@ -28,10 +29,10 @@ describe('MapFactory', () => {
             });
 
         const elementRef = { nativeElement: {}} as any;
-        const webMap = {};
+        const webMapDocument = new WebMapDocument;
 
         // Call the method under test
-        mapFactory.initializeMapView(elementRef, webMap);
+        mapFactory.initializeMapView(elementRef, webMapDocument);
     });
 
     it('removeMapViewContainer_shouldCallRemoveChild_givenElementRef', () => {

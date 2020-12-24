@@ -23,16 +23,16 @@ export class MapEffects {
            .pipe(
                ofType(MapActions.GetWebMap),
                withLatestFrom(this.store.select(selectWebMap),
-                   (action: Action, webMap) => {
-                       return webMap;
+                   (action: Action, webMapDocument) => {
+                       return webMapDocument;
                    }
                ),
-               mergeMap((webMap) => {
-                   if (webMap != null) { return [MapActions.GetWebMapCompleted({webMap: webMap})]; }
+               mergeMap((webMapDocument) => {
+                   if (webMapDocument != null) { return [MapActions.GetWebMapCompleted({webMapDocument: webMapDocument})]; }
                    return this.mapService.getWebMap()
                        .pipe(
                            map((x) => {
-                               return MapActions.GetWebMapCompleted({webMap: x});
+                               return MapActions.GetWebMapCompleted({webMapDocument: x});
                            }),
                            catchError((error) => {
                                return of(MapActions.GetWebMapError({error: error}));

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import WebMap from '@arcgis/core/WebMap';
 import { Observable } from 'rxjs';
+import { WebMapDocument } from '../shared/models/webmap-document';
 import { HttpClientService } from '../shared/services/http-client.service';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class MapService {
 
     constructor(private httpClientService: HttpClientService) { }
 
-    getWebMap(): Observable<WebMap> {
-        return this.httpClientService.get<WebMap>('api/webmap');
+    getWebMap(): Observable<WebMapDocument> {
+        return this.httpClientService.get<WebMapDocument>('api/webmap');
     }
 }

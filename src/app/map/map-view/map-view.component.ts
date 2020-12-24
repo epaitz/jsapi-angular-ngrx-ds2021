@@ -30,10 +30,10 @@ export class MapViewComponent implements OnInit, OnDestroy {
         this.serviceStatus$ = this.store.pipe(select(selectWebMapStatus));
 
         this.store.select(selectWebMap)
-            .pipe(filter(webMap => webMap != null))
+            .pipe(filter(webMapDocument => webMapDocument != null))
             .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe((webMap) => {
-                this.mapFactory.initializeMapView(this.elementRef, webMap);
+            .subscribe((webMapDocument) => {
+                this.mapFactory.initializeMapView(this.elementRef, webMapDocument);
             });
 
         this.store.dispatch(MapActions.GetWebMap());
