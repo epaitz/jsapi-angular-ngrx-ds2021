@@ -19,3 +19,7 @@ The ServiceStatus class is a simple model used to describe the status of a servi
 ServiceStatusTypes
 
 Status type enumeration used by the ServiceStatus model. 
+
+WebMapDocument
+
+This class us used so hold the JSON representation of a WebMap from a REST API. The JSAPI WebMap is created from this class. 
