@@ -9,6 +9,7 @@ The project touches on the following Packages
 - Angular Flex-Layout (used to create an adapative layout)
 - Angular In-Memory Web API
 - ArcGIS JavaScript API (v4.18)
+- NgRx (Store, Effects, RouterStore, StoreDevTools, and Freeze)
 - Jasmine Testing using mocks with createSpyObj
 - Karma Code Coverage
 
