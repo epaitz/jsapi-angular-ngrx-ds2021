@@ -22,6 +22,7 @@ import { SettingsComponent } from './map/settings/settings.component';
 import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
 import { MapViewComponent } from './map/map-view/map-view.component';
 import { AppStoreModule } from './app-store.module';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { AppStoreModule } from './app-store.module';
         MapContentsComponent,
         SettingsComponent,
         ToolbarComponent,
-        MapViewComponent
+        MapViewComponent,
+        AdminComponent
     ],
     imports: [
         BrowserModule,

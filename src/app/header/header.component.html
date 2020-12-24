@@ -41,11 +41,11 @@
             mat-button routerLink="{{route.path}}" routerLinkActive="active">
           <span>{{route.label}}</span>
         </button>
-  
+
         <button mat-button [matMenuTriggerFor]="userMenu">
-          <mat-icon>account_circle</mat-icon>
+          <mat-icon>account_circle</mat-icon> <span> David St. Hubbins</span>
         </button>
-  
+
         <mat-menu #userMenu="matMenu">
           <button mat-menu-item routerLink="/map/notifications">
             <mat-icon>notifications</mat-icon>

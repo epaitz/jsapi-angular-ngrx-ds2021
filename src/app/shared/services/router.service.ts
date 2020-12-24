@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { RouteMetadata } from '../models/route-metadata';
+import { AuthGuardService } from './auth-guard.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RouterService {
 
-    constructor(private router: Router) { }
+    constructor(
+        private router: Router, 
+        private authGuardService: AuthGuardService) { 
+    }
 
     getRouterConfigMetadata(): RouteMetadata[] {
         return this.processRoutes(null, this.router.config);
@@ -19,6 +23,9 @@ export class RouterService {
         return routes
             .filter((route: Route) => {
                 return route.data != null;
+            })
+            .filter((route: Route) => {
+                return (route.canActivate == null ? true : this.authGuardService.hasAccess(route));
             })
             .map((route: Route) => {
                 return new RouteMetadata(
