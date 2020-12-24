@@ -1,5 +1,9 @@
 ## Models
 
+MapViewProperties
+
+The MapViewProperties class is used to track the property changes to the MapView. This object is stored in the NgRx State.
+
 RestResponse
 
 The RestResponse class is used for a REST API response that uses an object with properties like data, error, and others. Some REST APIs will return a root object that contains a data property that holds the actual response. Other properties like error and size may be included. Currently the RestResponse class only contains a data and error properties. It is used by the HttpClientService in this application.
