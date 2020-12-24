@@ -1,4 +1,4 @@
-# ArcGIS API for JavaScript with Angular
+# ArcGIS API for JavaScript with Angular and NgRx
 
 This project was created for the Developer Summit 2021 ArcGIS JavaScript API and Angular presentation. The project was used to demonstrate several aspects of Angular and the ArcGIS JavaScript API 4.18 or later. This can be considered a starter application to help Angular developers create a single page map-centric application using the ArcGIS JavaScript API.
 
