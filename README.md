@@ -20,7 +20,6 @@ The project also contains the following custom components and services
 - [HttpClientService](src/app/shared/services) (service to wrap the HttpClient)
 - [BaseService](src/app/shared/services)
 - [RouterService](src/app/shared/services)
-- [SidenavService](src/app/shared/services)
 - [RestResponse](src/app/shared/models)
 - [RouteMetadata](src/app/shared/models)
 - [ServiceStatus](src/app/shared/models)
