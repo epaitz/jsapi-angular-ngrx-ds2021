@@ -14,10 +14,9 @@ The HttpClientService is used to centralize methods for all of the HTTP verbs (i
 
 NavigationService
 
-The NavigationService is primarily used to keep the Map and MapView in sync with the NgRx State. This is similar to how the StoreRouterConnectingModule works for NgRx. The StoreRouterConnectingModule is used to keep the Angular Router configuration in sync with the NgRx State. The difference is that NgRx recommends using the Angular Router to navigate the router (i.e. navigateByUrl()) but to navigate the Map and MapView you dispatch the NavigationRequest action. 
+The NavigationService is primarily used to keep the Map and MapView in sync with the NgRx State. This is similar to how the RouterStore works for NgRx. The RouterStore is used to keep the Angular Router configuration in sync with the NgRx State. The difference is that NgRx recommends using the Angular Router to navigate by calling navigateByUrl() but to navigate the Map and MapView you dispatch the NavigationRequest action. 
 
 Another approach that would be similar to how the NgRx RouterStore works would be to get a reference to the MapView by using MapFactor.getWebMap() and then call webMap.goTo() for navigation. Then we can remove the NavigtionRequest action. I am not sure I like this approach because there will be other map requirements like drawing for example which could also follow the action approach by creating a DrawRequest action. These actions would not need to be written to the state but just intercepted by the Effect.
-
 
 RouterService
 
