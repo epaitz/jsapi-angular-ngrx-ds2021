@@ -1,6 +1,6 @@
 ## Bookmarks Component
 
-The BookmarksComponent is tied to the /bookmarks route and is currently empty but can be used to display a list of bookmarks where the user can zoom to an individual bookmark, delete a bookmark and create a new bookmark. 
+The BookmarksComponent is tied to the /bookmarks route and is used to demonstrate how you can use an NgRx action to navigate the map. 
 
 ## Map Contents
 
