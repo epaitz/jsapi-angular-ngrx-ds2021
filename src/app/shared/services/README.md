@@ -1,5 +1,9 @@
 ## Shared Services
 
+AuthGuardService
+
+The AuthGuardService is just an example of how to guard a route. The service is currently hard-coded to hide the admin route but can be expanded to compare data from a user object to data in the route data property. The hasAccess() method is exposed as public because it is leveraged by the RouterService which it uses to filter out routes the current user does not have access to. If the logic to guard a route is in the hadAccess() method then it can be used by the AuthGuardService and leveraged by the RouterService to hide navigation elements the current user does not have access to.
+
 BaseService
 
 The BaseService class currently only contains an updateStatus() method used to update a Subject of type ServiceStatus. This was done so the method did not have to be reapeated in any service that had a ServiceStatus.
