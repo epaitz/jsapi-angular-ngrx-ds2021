@@ -31,5 +31,3 @@ export const selectSidenavOpened = createSelector(
         return state?.sidenav?.opened;
     }
 );
-
-export const selectRouterState = (state: AppState) => state.router;

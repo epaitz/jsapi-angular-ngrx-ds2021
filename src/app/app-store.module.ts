@@ -9,8 +9,11 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { environment } from '../environments/environment';
 import { mapReducer } from './map/map.reducer';
 import { MapEffects } from './map/map.effects';
+import { bookmarksReducer } from './map/bookmarks/bookmarks.reducer';
+import { BookmarksEffects } from './map/bookmarks/bookmarks.effects';
 
 export const reducers: ActionReducerMap<AppState> = {
+    bookmarksState: bookmarksReducer,
     mapState: mapReducer,
     router: routerReducer
 };
@@ -21,7 +24,8 @@ export const metaReducers: MetaReducer<AppState>[] = !environment.production ? [
     imports: [
         StoreModule.forRoot(reducers, { metaReducers }),
         EffectsModule.forRoot([
-            MapEffects
+            MapEffects,
+            BookmarksEffects
         ]),
         StoreDevtoolsModule.instrument({
           maxAge: 25

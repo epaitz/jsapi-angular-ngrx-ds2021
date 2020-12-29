@@ -25,7 +25,7 @@ const reducer = createReducer(
         return updateMapViewProperties(state, action.mapViewProperties);
     }),
     on(MapActions.SidenavToggle, (state, action) => {
-        return sidenavUpdateOpened(state, action.path);
+        return sidenavUpdateToggle(state, action.path);
     }),
     on(MapActions.SidenavOpen, (state, action) => {
         return sidenavUpdateOpened(state, action.path, true);
@@ -57,22 +57,22 @@ function updateMapViewProperties(state: MapState, mapViewProperties: MapViewProp
     };
 }
 
-// function updateMapViewProperties(state: MapState, mapViewProperties: MapViewProperties): MapState {
-//     const {drawRequest, navigationRequest, ...stateWithoutRequest} = {
-//         ...state,
-//         mapViewProperties: {
-//             ...state.mapViewProperties,
-//             ...mapViewProperties
-//         }
-//     };
-//     return stateWithoutRequest;
-// }
+function sidenavUpdateToggle(state: MapState, path: string): MapState {
 
-function sidenavUpdateOpened(state: MapState, path: string, opened?: boolean): MapState {
     return {
         ...state,
         sidenav: {
-            opened: (opened == null ? !state.sidenav.opened : opened),
+            opened: (state.sidenav.path === path ? !state.sidenav.opened : true),
+            path: path
+        }
+    };
+}
+
+function sidenavUpdateOpened(state: MapState, path: string, opened: boolean): MapState {
+    return {
+        ...state,
+        sidenav: {
+            opened: opened,
             path: path
         }
     };

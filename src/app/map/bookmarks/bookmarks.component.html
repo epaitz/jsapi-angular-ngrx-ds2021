@@ -1,5 +1,29 @@
-<div fxLayout="row" fxFlexFill style="align-items: center;">
-    <div fxFlex="1 1 0%" style="text-align: center">
-        <span>Bookmarks Component</span>        
+<app-status-container [serviceStatus]="(status$ | async)" (onRefresh)="refresh()">
+    <div fxFill fxLayout="column" fxLayoutGap="5px" style="padding: 5px">
+
+      <div fxFlex="0 1 0%">
+        <mat-form-field appearance="outline" floatLabel="never">
+          <mat-label>Add</mat-label>
+          <input matInput [(ngModel)]="name" placeholder="Enter bookmark name" autocomplete="off">
+          <button mat-icon-button matSuffix (click)="addBookmark()">
+              <mat-icon>add</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <app-scrollable-container fxFlex="1 1 0%">
+          <mat-action-list>
+            <mat-list-item *ngFor="let bookmark of bookmarks$ | async">
+              <span mat-line>{{bookmark.name}}</span>
+              <button mat-icon-button hover (click)="zoomTo(bookmark.extent)" title="Zoom To">
+                <mat-icon matListIcon>search</mat-icon>
+              </button>
+              <button mat-icon-button hover (click)="deleteBookmark(bookmark.id)" title="Delete">
+                <mat-icon matListIcon>delete</mat-icon>
+              </button>
+            </mat-list-item>
+          </mat-action-list>
+      </app-scrollable-container>s
+
     </div>
-</div>
+</app-status-container>

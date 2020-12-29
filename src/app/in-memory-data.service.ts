@@ -25,13 +25,13 @@ export class InMemoryDataService implements InMemoryDbService {
                 {
                     id: 'defaultBasemap',
                     layerType: 'ArcGISTiledMapServiceLayer',
-                    url: 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer',
+                    url: 'http://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer',
                     visibility: true,
                     opacity: 1,
-                    title: 'Topographic'
+                    title: 'World Imagery'
                 }
                 ],
-                title: 'Topographic'
+                title: 'World Imagery'
             },
             spatialReference: {
                 wkid: 102100,
@@ -55,8 +55,69 @@ export class InMemoryDataService implements InMemoryDbService {
             authoringAppVersion: '4.1',
             version: '2.4'
         };
+        const bookmarks = [
+            {
+                id: '1',
+                name: 'Stonehenge',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: -204464.48473945778,
+                    ymin: 6652004.209942442,
+                    xmax: -202118.82343389466,
+                    ymax: 6653996.349992177
+                }
+            },
+            {
+                id: '2',
+                name: 'Colosseum',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: 1389452.5122349507,
+                    ymin: 5143550.030337398,
+                    xmax: 1391798.1735405137,
+                    ymax: 5145542.170387133
+                }
+            },
+            {
+                id: '3',
+                name: 'Eiffel Tower',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: 254836.15629884042,
+                    ymin: 6250370.866467227,
+                    xmax: 256008.9869514921,
+                    ymax: 6251366.936491984
+                  }
+            },
+            {
+                id: '4',
+                name: 'Statue of Liberty',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: -8243167.852529133,
+                    ymin: 4966081.014563843,
+                    xmax: -8241995.02187648,
+                    ymax: 4967077.084588599
+                }
+            }
+        ];
         return {
-            webmap
+            webmap,
+            bookmarks
         };
     }
 }
+
+// 40.6892° N, 74.0445° W

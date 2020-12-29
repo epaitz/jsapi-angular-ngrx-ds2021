@@ -4,10 +4,11 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AppState } from '../app.state';
-import { selectRouterState, selectSidenavOpened } from './map.selectors';
+import { selectSidenavOpened } from './map.selectors';
 import * as MapActions from './map.actions';
 import { RouterService } from '../shared/services/router.service';
 import { RouteMetadata } from '../shared/models/route-metadata';
+import { selectRouteDataLabel, selectRouterState } from '../app-router.selector';
 
 @Component({
     selector: 'app-map-component',
@@ -19,9 +20,9 @@ export class MapComponent implements OnInit, OnDestroy {
     public isXs = false;
     public isSm = false;
     public mode: string;
-    public routeDataLabel: string;
     public routerConfig: RouteMetadata[];
     public sidenavOpened$: Observable<boolean>;
+    public routeDataLabel$: Observable<string>;
 
     private routeChildUrl: string;
     private ngUnsubscribe: Subject<any> = new Subject();
@@ -37,10 +38,12 @@ export class MapComponent implements OnInit, OnDestroy {
 
         this.sidenavOpened$ = this.store.select(selectSidenavOpened);
 
+        this.routeDataLabel$ = this.store.select(selectRouteDataLabel)
+
         this.store.select(selectRouterState)
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((state) => {
-                this.routeChildUrl = state.state.url;
+                this.routeChildUrl = state?.state?.url;
             });
 
         this.mediaObserver.asObservable()

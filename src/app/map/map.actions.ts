@@ -7,6 +7,8 @@ export const GetWebMap = createAction(MapActionTypes.GetWebMap);
 export const GetWebMapCompleted = createAction(MapActionTypes.GetWebMapCompleted, props<{webMapDocument: WebMapDocument}>());
 export const GetWebMapError = createAction(MapActionTypes.GetWebMapError, props<{error: any}>());
 
+export const NavigationRequest = createAction(MapActionTypes.NavigationRequest, props<{target: any}>());
+
 export const UpdateMapViewProperties = createAction(
     MapActionTypes.UpdateMapViewProperties,
     props<{mapViewProperties: MapViewProperties}>()
@@ -15,7 +17,3 @@ export const UpdateMapViewProperties = createAction(
 export const SidenavToggle = createAction(MapActionTypes.SidenavToggle, props<{path: string}>());
 export const SidenavOpen = createAction(MapActionTypes.SidenavOpen, props<{path: string}>());
 export const SidenavClose = createAction(MapActionTypes.SidenavClose, props<{path: string}>());
-
-
-// Add bookmarksactions.ts
-// Add GetBookmarks, GetBookmarksCompleted, RefreshBookmarks (or ReloadBookmarks)

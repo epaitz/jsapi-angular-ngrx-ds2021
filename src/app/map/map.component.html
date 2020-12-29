@@ -5,7 +5,7 @@
             <div fxLayout="column" fxFill>
                 <div fxLayout="row" fxFlex="0 1 0%" style="padding: 5px 5px 0 5px; align-items: center;">
                 <div fxFlex="1 1 0%">
-                    <span style="font-size: 24px;">{{routeDataLabel}}</span>
+                    <span style="font-size: 24px;">{{routeDataLabel$ | async}}</span>
                 </div>
                 <div fxFlex="0 1 0%">
                     <button mat-button style="width: 100%;" (click)="sidenavClose()">

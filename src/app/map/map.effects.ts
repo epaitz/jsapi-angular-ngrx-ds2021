@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, Action } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
 import { AppState } from '../app.state';
 import { NavigationService } from '../shared/services/navigation.service';
 import { selectWebMap } from './map.selectors';
@@ -41,4 +41,15 @@ export class MapEffects {
                })
            );
     });
+
+    // Create a navigation.effects.ts for this or move NavigationService into MapService
+    navigationRequest$ = createEffect(() => this.actions$
+        .pipe(
+            ofType(MapActions.NavigationRequest),
+            tap((action: any) => {
+                this.navigationService.goTo(action.target)
+            })
+        ),
+        { dispatch: false }
+    );
 }

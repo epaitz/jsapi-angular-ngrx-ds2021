@@ -23,6 +23,8 @@ import { ToolbarComponent } from './shared/components/toolbar/toolbar.component'
 import { MapViewComponent } from './map/map-view/map-view.component';
 import { AppStoreModule } from './app-store.module';
 import { AdminComponent } from './admin/admin.component';
+import { ScrollableContainerComponent } from './shared/components/scrollable-container/scrollable-container.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -40,10 +42,12 @@ import { AdminComponent } from './admin/admin.component';
         SettingsComponent,
         ToolbarComponent,
         MapViewComponent,
-        AdminComponent
+        AdminComponent,
+        ScrollableContainerComponent
     ],
     imports: [
         BrowserModule,
+        FormsModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         FlexLayoutModule,

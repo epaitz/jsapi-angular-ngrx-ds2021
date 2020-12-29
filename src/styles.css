@@ -4,3 +4,27 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+button[mat-icon-button][hover] {
+    display: none;
+}
+
+.mat-list.mat-list-base {
+    padding-top: 0;
+}
+
+mat-list-item:hover button[mat-icon-button][hover] {
+    display: block;
+}
+
+mat-list-item button[mat-icon-button]:hover {
+    color: #3f51b5;  
+}
+
+mat-form-field  {
+    width: 100%
+}
+
+.mat-form-field-wrapper {
+    padding-bottom: 0;
+}
