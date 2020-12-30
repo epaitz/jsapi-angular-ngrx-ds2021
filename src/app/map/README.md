@@ -1,6 +1,6 @@
 ## Bookmarks Component
 
-The BookmarksComponent is tied to the /bookmarks route and is currently empty but can be used to display a list of bookmarks where the user can zoom to an individual bookmark, delete a bookmark and create a new bookmark. 
+The BookmarksComponent is tied to the /bookmarks route and is used to demonstrate how you can use an NgRx action to navigate the map. 
 
 ## Map Contents
 
@@ -28,7 +28,7 @@ The MapComponent is the component tied to the /map route and contains the Toolba
 
 ## Map Factory
 
-The MapFactory is a service that will initialize the WebMap and MapView and store a reference to the DOM used to create the MapView so that is can be added and removed from the DOM so that the parent component (MapViewComponent) can be destroyed and recreated as the route is navigated. 
+The MapFactory is a service that will initialize the WebMap and MapView and store a reference to the DOM used to create the MapView so that is can be added and removed from the DOM so that the parent component (MapViewComponent) can be destroyed and recreated as the route is navigated. I did consider merging the Map Factory into the Map Service but for now I wanted to keep the creation of the Map and Map View separate from other Map related code like fetching the WebMap JSON. 
 
 ## Map Service
 
