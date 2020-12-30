@@ -1,4 +1,4 @@
-<app-status-container [serviceStatus]="(status$ | async)" (onRefresh)="refresh()">
+<app-status-container [serviceStatus]="(serviceStatus$ | async)" (onRefresh)="refresh()">
     <div fxFill fxLayout="column" fxLayoutGap="5px" style="padding: 5px">
 
       <div fxFlex="0 1 0%">

@@ -4,13 +4,17 @@ import { cold, hot } from 'jasmine-marbles';
 describe('RouterService', () => {
     let routerService: RouterService;
     let mockRouter: any;
+    let mockAuthGuardService: any;
 
     beforeEach(() => {
         mockRouter = jasmine.createSpyObj('mockRouter', [''], { config: [] });
-        routerService = new RouterService(mockRouter);
+        mockAuthGuardService = jasmine.createSpyObj('mockAuthGuardService', ['hasAccess']);
+        routerService = new RouterService(mockRouter, mockAuthGuardService);
     });
 
-    it('getRouterConfigMetadata_should_given', () => {
+    it('getRouterConfigMetadata_shouldInitializeRouterConfigMetadata', () => {
+
+        mockAuthGuardService.hasAccess.and.returnValue(true);
 
         // Setup a response for the config property on mockRouter
         const config = [

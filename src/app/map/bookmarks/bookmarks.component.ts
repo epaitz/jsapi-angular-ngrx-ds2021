@@ -16,13 +16,13 @@ import { selectBookmarks, selectBookmarksStatus } from './bookmarks.selectors';
 export class BookmarksComponent implements OnInit {
 
     public name: string;
-    public status$: Observable<ServiceStatus>;
+    public serviceStatus$: Observable<ServiceStatus>;
     public bookmarks$: Observable<Bookmark[]>;
 
     constructor(private store: Store<AppState>) { }
 
     ngOnInit(): void {
-        this.status$ = this.store.select(selectBookmarksStatus);
+        this.serviceStatus$ = this.store.select(selectBookmarksStatus);
         this.bookmarks$ = this.store.select(selectBookmarks);
         this.store.dispatch(BookmarksActions.GetBookmarks());
     }
