@@ -13,7 +13,7 @@ describe('HeaderComponent', () => {
     let componentFixture: ComponentFixture<HeaderComponent>;
     let mockStore: any;
     let mockRouterService: any;
-    
+
     beforeEach(async () => {
 
         mockStore = jasmine.createSpyObj('mockStore', ['dispatch']);
@@ -63,5 +63,5 @@ describe('HeaderComponent', () => {
 
         expect(mockStore.dispatch).toHaveBeenCalledTimes(1);
         expect(mockStore.dispatch).toHaveBeenCalledWith({path: 'home', type: MapActionTypes.SidenavOpen});
-    })
+    });
 });

@@ -9,8 +9,8 @@ import { AuthGuardService } from './auth-guard.service';
 export class RouterService {
 
     constructor(
-        private router: Router, 
-        private authGuardService: AuthGuardService) { 
+        private router: Router,
+        private authGuardService: AuthGuardService) {
     }
 
     getRouterConfigMetadata(): RouteMetadata[] {

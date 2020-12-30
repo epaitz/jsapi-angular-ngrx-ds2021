@@ -8,9 +8,9 @@ import { Bookmark } from './bookmark';
 const initialState: BookmarksState = {
     status: new ServiceStatus(ServiceStatusTypes.content),
     bookmarks: null
-}
+};
 
-export function bookmarksReducer(state: BookmarksState = initialState, action: Action) {
+export function bookmarksReducer(state: BookmarksState = initialState, action: Action): BookmarksState {
     return bookmarksReducerFn(state, action);
 }
 
@@ -19,24 +19,27 @@ const bookmarksReducerFn = createReducer(
     on(BookmarksActions.GetBookmarks, (state, action) => {
         return updateServiceStatus(state, ServiceStatusTypes.loading);
     }),
+    on(BookmarksActions.ReloadBookmarks, (state, action) => {
+        return updateServiceStatus(state, ServiceStatusTypes.loading);
+    }),
     on(BookmarksActions.GetBookmarksCompleted, (state, action) => {
         return addBookmarksToState(state, action.bookmarks);
     })
-)
+);
 
 function updateServiceStatus(state: BookmarksState, type: ServiceStatusTypes, error?: any): BookmarksState {
-    return { ...state, status: new ServiceStatus(type, error)}
+    return { ...state, status: new ServiceStatus(type, error)};
 }
 
 function addBookmarksToState(state: BookmarksState, bookmarks: Bookmark[]): BookmarksState {
     return {
-        ...state, 
-        status: new ServiceStatus(ServiceStatusTypes.content), 
+        ...state,
+        status: new ServiceStatus(ServiceStatusTypes.content),
         bookmarks: bookmarks.slice().sort(compareBookmarksFn)
-    }
+    };
 }
 
-function compareBookmarksFn (bookmark1: Bookmark, bookmark2: Bookmark) {
+function compareBookmarksFn(bookmark1: Bookmark, bookmark2: Bookmark): number {
     if (bookmark1.name < bookmark2.name) { return -1; }
     if (bookmark1.name > bookmark2.name) { return 1; }
     return 0;

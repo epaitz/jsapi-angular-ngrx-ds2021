@@ -18,7 +18,7 @@ export class MapViewComponent implements OnInit, OnDestroy {
     @ViewChild('mapViewDiv', { static: true }) private elementRef: ElementRef;
 
     public serviceStatus$: Observable<ServiceStatus>;
-    
+
     private ngUnsubscribe: Subject<any> = new Subject();
 
     constructor(

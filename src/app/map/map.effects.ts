@@ -47,7 +47,7 @@ export class MapEffects {
         .pipe(
             ofType(MapActions.NavigationRequest),
             tap((action: any) => {
-                this.navigationService.goTo(action.target)
+                this.navigationService.goTo(action.target);
             })
         ),
         { dispatch: false }

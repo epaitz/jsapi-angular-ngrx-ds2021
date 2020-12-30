@@ -38,7 +38,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
         this.sidenavOpened$ = this.store.select(selectSidenavOpened);
 
-        this.routeDataLabel$ = this.store.select(selectRouteDataLabel)
+        this.routeDataLabel$ = this.store.select(selectRouteDataLabel);
 
         this.store.select(selectRouterState)
             .pipe(takeUntil(this.ngUnsubscribe))

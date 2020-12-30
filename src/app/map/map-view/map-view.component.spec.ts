@@ -102,8 +102,10 @@ describe('MapViewComponent', () => {
 
     it('ngOnDestroy_shouldUnsubscribe', () => {
 
+        /* tslint:disable:no-string-literal */
         spyOn(mapViewComponent['ngUnsubscribe'], 'next').and.callThrough();
         spyOn(mapViewComponent['ngUnsubscribe'], 'complete').and.callThrough();
+        /* tslint:enable:no-string-literal */
 
         // Initialize the component
         componentFixture.detectChanges();
@@ -111,7 +113,9 @@ describe('MapViewComponent', () => {
         // Call the method under test
         componentFixture.destroy();
 
+        /* tslint:disable:no-string-literal */
         expect(mapViewComponent['ngUnsubscribe'].next).toHaveBeenCalledTimes(1);
         expect(mapViewComponent['ngUnsubscribe'].complete).toHaveBeenCalledTimes(1);
+        /* tslint:enable:no-string-literal */
     });
 });

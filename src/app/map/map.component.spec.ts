@@ -6,7 +6,6 @@ import { cold, hot } from 'jasmine-marbles';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { RouterService } from '../shared/services/router.service';
 import { of } from 'rxjs';
-import MapView from '@arcgis/core/views/MapView';
 import { MapActionTypes } from './map.action.types';
 
 describe('MapComponent', () => {
@@ -67,15 +66,15 @@ describe('MapComponent', () => {
     it('ngOnInit_shouldSidenavOpened', () => {
 
         mockStore.setState(
-            { 
-                mapState: { 
+            {
+                mapState: {
                     sidenav: {
-                        opened: true, 
+                        opened: true,
                         path: '/map/search'
                     }
-                }, 
-                router: { 
-                    state: { 
+                },
+                router: {
+                    state: {
                         ulr: '/map/search'
                     }
                 }
@@ -119,7 +118,7 @@ describe('MapComponent', () => {
         expect(mapComponent.mode).toBe('over');
         expect(mockStore.dispatch).toHaveBeenCalledOnceWith({ type: MapActionTypes.SidenavClose, path: '/map/search' });
     });
-    
+
     it('ngOnInit_shouldSetModeSide_andDispatchSidenavOpen_givenMediaObserverIsActiveFalse', () => {
 
         spyOn(mockStore, 'dispatch').and.callThrough();
@@ -157,8 +156,10 @@ describe('MapComponent', () => {
         const routerConfig = [];
         mockRouterService.getRouterConfigMetadata.and.returnValue(routerConfig);
 
+        /* tslint:disable:no-string-literal */
         spyOn(mapComponent['ngUnsubscribe'], 'next').and.callThrough();
         spyOn(mapComponent['ngUnsubscribe'], 'complete').and.callThrough();
+        /* tslint:enable:no-string-literal */
 
         // Initialize the component
         componentFixture.detectChanges();
@@ -166,8 +167,10 @@ describe('MapComponent', () => {
         // Call the method under test
         componentFixture.destroy();
 
+        /* tslint:disable:no-string-literal */
         expect(mapComponent['ngUnsubscribe'].next).toHaveBeenCalledTimes(1);
         expect(mapComponent['ngUnsubscribe'].complete).toHaveBeenCalledTimes(1);
+        /* tslint:enable:no-string-literal */
     });
 
     it('sidenavToggle_shouldDispatchSidenavToggle', () => {
@@ -179,7 +182,7 @@ describe('MapComponent', () => {
         // Call the method under test
         mapComponent.sidenavToggle(path);
 
-        expect(mockStore.dispatch).toHaveBeenCalledOnceWith({ type: MapActionTypes.SidenavToggle, path: '/map/search'})
+        expect(mockStore.dispatch).toHaveBeenCalledOnceWith({ type: MapActionTypes.SidenavToggle, path: '/map/search'});
     });
 
     it('sidenavClose_shouldDispatchSidenavClose', () => {
@@ -204,6 +207,6 @@ describe('MapComponent', () => {
         // Call the method under test
         mapComponent.sidenavClose();
 
-        expect(mockStore.dispatch).toHaveBeenCalledOnceWith({ type: MapActionTypes.SidenavClose, path: '/map/search'})
+        expect(mockStore.dispatch).toHaveBeenCalledOnceWith({ type: MapActionTypes.SidenavClose, path: '/map/search'});
     });
 });

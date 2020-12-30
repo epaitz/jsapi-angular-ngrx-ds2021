@@ -29,7 +29,7 @@ describe('MapFactory', () => {
             });
 
         const elementRef = { nativeElement: {}} as any;
-        const webMapDocument = new WebMapDocument;
+        const webMapDocument = new WebMapDocument();
 
         // Call the method under test
         mapFactory.initializeMapView(elementRef, webMapDocument);

@@ -119,5 +119,3 @@ export class InMemoryDataService implements InMemoryDbService {
         };
     }
 }
-
-// 40.6892° N, 74.0445° W

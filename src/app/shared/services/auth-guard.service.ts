@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, Route, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
-import { Observable, Observer } from "rxjs";
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Route, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable, Observer } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate {
-    
+
     constructor(private router: Router) { }
 
     public hasAccess(route: Route | ActivatedRouteSnapshot): boolean {
@@ -14,12 +14,11 @@ export class AuthGuardService implements CanActivate {
             return !(route.routeConfig.path === 'admin');
         } else {
             return !(route.path === 'admin');
-        }   
+        }
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-        let hasAccess = this.hasAccess(route);
-        console.log(hasAccess)
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): UrlTree {
+        const hasAccess = this.hasAccess(route);
         if (hasAccess === false) {
             return this.router.createUrlTree(['/home']);
         }

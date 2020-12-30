@@ -1,17 +1,19 @@
 import { createSelector } from '@ngrx/store';
 import { AppState } from '../../app.state';
+import { BookmarksState } from './bookmarks-state';
 
-export const bookmarksStateSelector = createSelector(
-    (state: AppState) => { return state.bookmarksState; },
-    (state) => { return state; }
-)
+export const selectBookmarksState = (state: AppState) => state.bookmarksState;
 
-export const bookmarksStatusSelector = createSelector(
-    (state: AppState) => { return state.bookmarksState.status; },
-    (status) => { return status; }
-)
+export const selectBookmarksStatus = createSelector(
+    selectBookmarksState,
+    (state: BookmarksState) => {
+        return state?.status;
+    }
+);
 
-export const bookmarksSelector = createSelector(
-    (state: AppState) => { return state.bookmarksState.bookmarks; },
-    (bookmarks) => { return bookmarks; }
-)
+export const selectBookmarks = createSelector (
+    selectBookmarksState,
+    (state: BookmarksState) => {
+        return state?.bookmarks;
+    }
+);
