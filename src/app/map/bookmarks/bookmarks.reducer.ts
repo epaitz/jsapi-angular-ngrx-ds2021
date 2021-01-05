@@ -25,28 +25,31 @@ const bookmarksReducerFn = createReducer(
     }),
     on(BookmarksActions.GetBookmarksCompleted, (state, action) => {
         return addBookmarksToState(state, action.bookmarks);
+    }),
+    on(BookmarksActions.GetBookmarksError, (state, action) => {
+        return updateServiceStatus(state, ServiceStatusTypes.error, action.error);
     })
 );
 
-function updateGetBookmarks(state: BookmarksState, type: ServiceStatusTypes, error?: any): BookmarksState {
+function updateGetBookmarks(state: BookmarksState, type: ServiceStatusTypes): BookmarksState {
     return {
         ...state,
         bookmarkCalls: state.bookmarkCalls + 1,
-        status: new ServiceStatus(type, error)
+        status: new ServiceStatus(type)
     };
 }
 
-function updateReloadBookmarks(state: BookmarksState, type: ServiceStatusTypes, error?: any): BookmarksState {
+function updateReloadBookmarks(state: BookmarksState, type: ServiceStatusTypes): BookmarksState {
     return {
         ...state,
         bookmarkCalls: 0,
-        status: new ServiceStatus(type, error)
+        status: new ServiceStatus(type)
     };
 }
 
-// function updateServiceStatus(state: BookmarksState, type: ServiceStatusTypes, error?: any): BookmarksState {
-//     return { ...state, status: new ServiceStatus(type, error)};
-// }
+function updateServiceStatus(state: BookmarksState, type: ServiceStatusTypes, error?: any): BookmarksState {
+    return { ...state, status: new ServiceStatus(type, error)};
+}
 
 function addBookmarksToState(state: BookmarksState, bookmarks: Bookmark[]): BookmarksState {
     return {

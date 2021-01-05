@@ -82,7 +82,6 @@ export class BookmarksEffects {
                 return this.bookmarksService.getBookmarks()
                     .pipe(
                         map((bookmarks: Bookmark[]) => {
-                            console.log(bookmarks);
                             return BookmarksActions.GetBookmarksCompleted({bookmarks: bookmarks});
                         })
                     );
