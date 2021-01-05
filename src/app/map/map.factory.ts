@@ -69,6 +69,7 @@ export class MapFactory {
     }
 
     public removeMapViewContainer(elementRef: ElementRef): void {
+        if (this.mapViewContainer == null) { return; }
         this.initializeRenderer();
         this.renderer.removeChild(elementRef.nativeElement, this.mapViewContainer);
     }

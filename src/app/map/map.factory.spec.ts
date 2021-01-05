@@ -37,12 +37,15 @@ describe('MapFactory', () => {
 
     it('removeMapViewContainer_shouldCallRemoveChild_givenElementRef', () => {
 
-        const renderer = { removeChild(): void {} };
+        const renderer = { appendChild(): void {}, removeChild(): void {} };
         mockRendererFactory.createRenderer.and.returnValue(renderer);
 
         spyOn(renderer, 'removeChild').and.callThrough();
 
         const elementRef = { nativeElement: {}} as any;
+        const webMapDocument = new WebMapDocument();
+
+        mapFactory.initializeMapView(elementRef, webMapDocument);
 
         // Call the method under test
         mapFactory.removeMapViewContainer(elementRef);

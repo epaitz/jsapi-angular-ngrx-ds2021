@@ -6,7 +6,7 @@ import { AppState } from 'src/app/app.state';
 import { ServiceStatus } from 'src/app/shared/models/service-status';
 import * as MapActions from '../map.actions';
 import { MapFactory } from '../map.factory';
-import { selectWebMap, selectWebMapStatus } from '../map.selectors';
+import { selectMapState, selectWebMap, selectWebMapStatus } from '../map.selectors';
 
 @Component({
     selector: 'app-map-view-component',

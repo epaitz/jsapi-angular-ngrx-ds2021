@@ -7,7 +7,8 @@ import { Bookmark } from './bookmark';
 
 const initialState: BookmarksState = {
     status: new ServiceStatus(ServiceStatusTypes.content),
-    bookmarks: null
+    bookmarks: null,
+    bookmarkCalls: 0
 };
 
 export function bookmarksReducer(state: BookmarksState = initialState, action: Action): BookmarksState {
@@ -17,25 +18,41 @@ export function bookmarksReducer(state: BookmarksState = initialState, action: A
 const bookmarksReducerFn = createReducer(
     initialState,
     on(BookmarksActions.GetBookmarks, (state, action) => {
-        return updateServiceStatus(state, ServiceStatusTypes.loading);
+        return updateGetBookmarks(state, ServiceStatusTypes.loading);
     }),
     on(BookmarksActions.ReloadBookmarks, (state, action) => {
-        return updateServiceStatus(state, ServiceStatusTypes.loading);
+        return updateReloadBookmarks(state, ServiceStatusTypes.loading);
     }),
     on(BookmarksActions.GetBookmarksCompleted, (state, action) => {
         return addBookmarksToState(state, action.bookmarks);
     })
 );
 
-function updateServiceStatus(state: BookmarksState, type: ServiceStatusTypes, error?: any): BookmarksState {
-    return { ...state, status: new ServiceStatus(type, error)};
+function updateGetBookmarks(state: BookmarksState, type: ServiceStatusTypes, error?: any): BookmarksState {
+    return {
+        ...state,
+        bookmarkCalls: state.bookmarkCalls + 1,
+        status: new ServiceStatus(type, error)
+    };
 }
+
+function updateReloadBookmarks(state: BookmarksState, type: ServiceStatusTypes, error?: any): BookmarksState {
+    return {
+        ...state,
+        bookmarkCalls: 0,
+        status: new ServiceStatus(type, error)
+    };
+}
+
+// function updateServiceStatus(state: BookmarksState, type: ServiceStatusTypes, error?: any): BookmarksState {
+//     return { ...state, status: new ServiceStatus(type, error)};
+// }
 
 function addBookmarksToState(state: BookmarksState, bookmarks: Bookmark[]): BookmarksState {
     return {
-        ...state,
         status: new ServiceStatus(ServiceStatusTypes.content),
-        bookmarks: bookmarks.slice().sort(compareBookmarksFn)
+        bookmarks: bookmarks.slice().sort(compareBookmarksFn),
+        bookmarkCalls: 0
     };
 }
 

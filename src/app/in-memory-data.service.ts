@@ -111,6 +111,160 @@ export class InMemoryDataService implements InMemoryDbService {
                     xmax: -8241995.02187648,
                     ymax: 4967077.084588599
                 }
+            },
+            {
+                id: '5',
+                name: 'Windsor Castle',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: -67610.72121511001,
+                    ymin: 6706739.909635874,
+                    xmax: -66701.83717573332,
+                    ymax: 6707862.578488718
+                  }
+            },
+            {
+                id: '6',
+                name: 'Taj Mahal',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: 8687093.89033436,
+                    ymin: 3144335.978792,
+                    xmax: 8688234.474115707,
+                    ymax: 3145720.205600985
+                  }
+            },
+            {
+                id: '7',
+                name: 'Buckingham Palace',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: -16277.84390548297,
+                    ymin: 6709784.378336319,
+                    xmax: -15137.260124136397,
+                    ymax: 6711168.605145304
+                  }
+            },
+            {
+                id: '8',
+                name: 'Hoover Dam',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: -12773689.858014941,
+                    ymin: 4301219.77087626,
+                    xmax: -12771408.690451995,
+                    ymax: 4303988.224494536
+                  }
+            },
+            {
+                id: '9',
+                name: 'Golden Gate Bridge',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: -13636267.594747687,
+                    ymin: 4551143.453573501,
+                    xmax: -13631705.259621793,
+                    ymax: 4556680.3608100545
+                  }
+            },
+            {
+                id: '10',
+                name: 'Burj Khalifa',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: 6151916.178940228,
+                    ymin: 2898591.7962207696,
+                    xmax: 6154197.346503175,
+                    ymax: 2901360.2498390465
+                  }
+            },
+            {
+                id: '11',
+                name: 'United States Capitol',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: -8573951.502900934,
+                    ymin: 4704732.808105457,
+                    xmax: -8571636.89413811,
+                    ymax: 4707064.137468216
+                  }
+            },
+            {
+                id: '12',
+                name: 'Mount Rushmore',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: -11517805.59671855,
+                    ymin: 5445507.165204986,
+                    xmax: -11515490.987955727,
+                    ymax: 5447838.494567745
+                  }
+            },
+            {
+                id: '13',
+                name: 'Louvre Museum',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: 258814.60783697452,
+                    ymin: 6250035.458354502,
+                    xmax: 261129.216599796,
+                    ymax: 6252366.787717261
+                  }
+            },
+            {
+                id: '14',
+                name: 'Notre-Dame Cathedrale',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: 261308.36588480198,
+                    ymin: 6249616.846191733,
+                    xmax: 261887.01807557142,
+                    ymax: 6250199.678532488
+                  }
+            },
+            {
+                id: '15',
+                name: 'Pantheon',
+                extent: {
+                    spatialReference: {
+                        latestWkid: 3857,
+                        wkid: 102100
+                    },
+                    xmin: 260908.26581485878,
+                    ymin: 6248516.869581529,
+                    xmax: 261486.91800562822,
+                    ymax: 6249099.7019222835
+                  }
             }
         ];
         return {

@@ -4,4 +4,5 @@ import { Bookmark } from './bookmark';
 export interface BookmarksState {
     status: ServiceStatus;
     bookmarks: Bookmark[];
+    bookmarkCalls: number;
 }

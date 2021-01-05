@@ -47,7 +47,7 @@ describe('MapComponent', () => {
     it('ngOnInit_shouldSetRouterConfig', () => {
 
         // Define the app state in the store
-        mockStore.setState({ router: { state: { ulr: '/map/search'}}});
+        mockStore.setState({ router: { state: { url: '/map/search', data: { label: 'search'}}}});
 
         // Setup a response for asObservable and isActive on mockMediaObserver
         mockMediaObserver.asObservable.and.returnValue(of({}));
@@ -75,7 +75,10 @@ describe('MapComponent', () => {
                 },
                 router: {
                     state: {
-                        ulr: '/map/search'
+                        url: '/map/search',
+                        data: {
+                            label: 'Search'
+                        }
                     }
                 }
             });
@@ -100,7 +103,7 @@ describe('MapComponent', () => {
         spyOn(mockStore, 'dispatch').and.callThrough();
 
         // Define the app state in the store
-        mockStore.setState({ router: { state: { url: '/map/search'}}});
+        mockStore.setState({ router: { state: { url: '/map/search', data: { label: 'search'}}}});
 
         // Setup a response for asObservable and isActive on mockMediaObserver
         mockMediaObserver.asObservable.and.returnValue(of({}));
@@ -116,7 +119,6 @@ describe('MapComponent', () => {
         expect(mapComponent.isXs).toBe(true);
         expect(mapComponent.isSm).toBe(true);
         expect(mapComponent.mode).toBe('over');
-        expect(mockStore.dispatch).toHaveBeenCalledOnceWith({ type: MapActionTypes.SidenavClose, path: '/map/search' });
     });
 
     it('ngOnInit_shouldSetModeSide_andDispatchSidenavOpen_givenMediaObserverIsActiveFalse', () => {
@@ -124,7 +126,7 @@ describe('MapComponent', () => {
         spyOn(mockStore, 'dispatch').and.callThrough();
 
         // Define the app state in the store
-        mockStore.setState({ router: { state: { url: '/map/search'}}});
+        mockStore.setState({ router: { state: { url: '/map/search', data: { label: 'search'}}}});
 
         // Setup a response for asObservable and isActive on mockMediaObserver
         mockMediaObserver.asObservable.and.returnValue(of({}));
@@ -146,7 +148,7 @@ describe('MapComponent', () => {
     it('ngOnDestroy_shouldUnsubscribe', () => {
 
         // Define the app state in the store
-        mockStore.setState({ router: { state: { ulr: '/map/search'}}});
+        mockStore.setState({ router: { state: { url: '/map/search', data: { label: 'search'}}}});
 
         // Setup a response for asObservable and isActive on mockMediaObserver
         mockMediaObserver.asObservable.and.returnValue(of({}));
@@ -188,7 +190,7 @@ describe('MapComponent', () => {
     it('sidenavClose_shouldDispatchSidenavClose', () => {
 
         // Define the app state in the store
-        mockStore.setState({ router: { state: { url: '/map/search'}}});
+        mockStore.setState({ router: { state: { url: '/map/search', data: { label: 'search'}}}});
 
         // Setup a response for asObservable and isActive on mockMediaObserver
         mockMediaObserver.asObservable.and.returnValue(of({}));

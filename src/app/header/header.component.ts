@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         this.routes = this.routerService.getRouterConfigMetadata();
+        this.routerService.updateRedirectTo();
     }
 
     sidenavOpen(path: string): void {

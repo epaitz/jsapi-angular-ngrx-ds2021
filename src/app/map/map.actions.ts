@@ -6,6 +6,7 @@ import { WebMapDocument } from '../shared/models/webmap-document';
 export const GetWebMap = createAction(MapActionTypes.GetWebMap);
 export const GetWebMapCompleted = createAction(MapActionTypes.GetWebMapCompleted, props<{webMapDocument: WebMapDocument}>());
 export const GetWebMapError = createAction(MapActionTypes.GetWebMapError, props<{error: any}>());
+export const GetWebMapNoOp = createAction(MapActionTypes.GetWebMapNoOp);
 
 export const NavigationRequest = createAction(MapActionTypes.NavigationRequest, props<{target: any}>());
 

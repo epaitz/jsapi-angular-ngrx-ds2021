@@ -2,13 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { AppState } from '../app.state';
 import { selectSidenavOpened } from './map.selectors';
 import * as MapActions from './map.actions';
 import { RouterService } from '../shared/services/router.service';
 import { RouteMetadata } from '../shared/models/route-metadata';
-import { selectRouteDataLabel, selectRouterState } from '../app-router.selector';
+import { selectRouteDataLabel, selectRouteUrl } from '../app-router.selector';
 
 @Component({
     selector: 'app-map-component',
@@ -19,13 +19,14 @@ export class MapComponent implements OnInit, OnDestroy {
 
     public isXs = false;
     public isSm = false;
-    public mode: string;
+    public mode = 'side';
     public routerConfig: RouteMetadata[];
     public sidenavOpened$: Observable<boolean>;
     public routeDataLabel$: Observable<string>;
 
     private routeChildUrl: string;
     private ngUnsubscribe: Subject<any> = new Subject();
+    private initializeSidenav = false;
 
     constructor(
         private store: Store<AppState>,
@@ -35,15 +36,14 @@ export class MapComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
 
         this.routerConfig = this.routerService.getRouterConfigMetadata();
-
         this.sidenavOpened$ = this.store.select(selectSidenavOpened);
-
         this.routeDataLabel$ = this.store.select(selectRouteDataLabel);
 
-        this.store.select(selectRouterState)
+        this.store.select(selectRouteUrl)
+            .pipe(filter(url => url != null))
             .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe((state) => {
-                this.routeChildUrl = state?.state?.url;
+            .subscribe((url) => {
+                this.routeChildUrl = url;
             });
 
         this.mediaObserver.asObservable()
@@ -53,10 +53,12 @@ export class MapComponent implements OnInit, OnDestroy {
                 this.isSm = this.mediaObserver.isActive('sm');
                 if (this.isXs || this.isSm) {
                     this.mode = 'over';
-                    this.store.dispatch(MapActions.SidenavClose({path: this.routeChildUrl}));
                 } else {
                     this.mode = 'side';
-                    this.store.dispatch(MapActions.SidenavOpen({path: this.routeChildUrl}));
+                    if (this.initializeSidenav === false ) {
+                        this.initializeSidenav = true;
+                        this.store.dispatch(MapActions.SidenavOpen({path: this.routeChildUrl}));
+                    }
                 }
             });
     }

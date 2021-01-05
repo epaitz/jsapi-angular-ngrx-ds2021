@@ -47,7 +47,7 @@
         </button>
 
         <mat-menu #userMenu="matMenu">
-          <button mat-menu-item routerLink="/map/notifications">
+          <button mat-menu-item routerLink="/map/notifications" (click)="sidenavOpen('/map/notifications')">
             <mat-icon>notifications</mat-icon>
             <span>Notifications</span>
           </button>

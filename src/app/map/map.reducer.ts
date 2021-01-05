@@ -62,7 +62,7 @@ function sidenavUpdateToggle(state: MapState, path: string): MapState {
     return {
         ...state,
         sidenav: {
-            opened: (state.sidenav.path === path ? !state.sidenav.opened : true),
+            opened: (state.sidenav?.path === path ? !state.sidenav.opened : true),
             path: path
         }
     };

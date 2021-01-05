@@ -11,13 +11,13 @@ describe('BookmarksComponent', () => {
     let bookmarksComponent: BookmarksComponent;
     let componentFixture: ComponentFixture<BookmarksComponent>;
     let mockStore: any;
-    
+
     const initialState = { };
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ 
-                BookmarksComponent 
+            declarations: [
+                BookmarksComponent
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA
@@ -45,8 +45,8 @@ describe('BookmarksComponent', () => {
         spyOn(mockStore, 'dispatch').and.callThrough();
 
         // Call the method under test
-        componentFixture.detectChanges(); 
-        
+        componentFixture.detectChanges();
+
         expect(mockStore.dispatch).toHaveBeenCalledOnceWith({ type: BookmarksActionTypes.GetBookmarks });
     });
 
@@ -55,8 +55,8 @@ describe('BookmarksComponent', () => {
         mockStore.setState({bookmarksState: { status: { type: 'loading'}}});
 
         // Call the method under test
-        componentFixture.detectChanges(); 
-        
+        componentFixture.detectChanges();
+
         const expected = cold('(a)', { a: { type: 'loading' } });
         expect(bookmarksComponent.serviceStatus$).toBeObservable(expected);
     });
@@ -66,8 +66,8 @@ describe('BookmarksComponent', () => {
         mockStore.setState({bookmarksState: { bookmarks: []}});
 
         // Call the method under test
-        componentFixture.detectChanges(); 
-        
+        componentFixture.detectChanges();
+
         const expected = cold('(a)', { a: [] });
         expect(bookmarksComponent.bookmarks$).toBeObservable(expected);
     });

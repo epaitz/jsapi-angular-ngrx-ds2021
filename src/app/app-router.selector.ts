@@ -24,7 +24,7 @@ export const selectRouteDataLabel = createSelector(
     selectRouterState,
     (state: RouterReducerState) => {
         /* tslint:disable:no-string-literal */
-        return state?.state?.['data']?.label;
+        return state?.state?.['data'].label;
         /* tslint:enable:no-string-literal */
     }
 );
