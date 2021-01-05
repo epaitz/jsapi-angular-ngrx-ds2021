@@ -4,14 +4,15 @@ This project was created for the Developer Summit 2021 ArcGIS JavaScript API and
 
 The project touches on the following Packages
 
-- Angular
-- Angular Material
-- Angular Flex-Layout (used to create an adapative layout)
-- Angular In-Memory Web API
-- ArcGIS JavaScript API (v4.18)
-- NgRx (Store, Effects, RouterStore, StoreDevTools, and Freeze)
-- Jasmine Testing using mocks with createSpyObj
-- Karma Code Coverage
+- [Angular](https://angular.io/)
+- [Angular Material](https://material.angular.io/)
+- [Angular Flex-Layout](https://github.com/angular/flex-layout) (used to create an adapative layout)
+- [Angular In-Memory Web API](https://angular.io/tutorial/toh-pt6)
+- [ArcGIS JavaScript API](https://developers.arcgis.com/javascript/) (v4.18)
+- [NgRx](https://ngrx.io/) (Store, Effects, RouterStore, StoreDevTools, and Freeze)
+- [Jasmine Testing](https://jasmine.github.io/) using mocks with createSpyObj
+- [Jasmine Marbles](https://www.npmjs.com/package/jasmine-marbles)
+- [Karma Code Coverage](https://angular.io/guide/testing-code-coverage)
 
 The project also contains the following custom components and services
 
@@ -43,4 +44,10 @@ Add the following to the architect/build/options section of the [angular.json](h
     ]
 ```
 
+- styles.css
 
+Add the following to the styles.css so that the main.css for the JSAPI is loaded. The "~" character tells the Webpack loader to resolove the path starting in node_modules. If the [@arcgis/core](https://www.npmjs.com/package/@arcgis/core) package is updated to use a newer version then this syntax will always use the main.css from the [@arcgis/core](https://www.npmjs.com/package/@arcgis/core) in node_modules. 
+
+```
+@import url('~@arcgis/core/assets/esri/themes/light/main.css'); 
+```
