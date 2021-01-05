@@ -18,10 +18,10 @@ export function bookmarksReducer(state: BookmarksState = initialState, action: A
 const bookmarksReducerFn = createReducer(
     initialState,
     on(BookmarksActions.GetBookmarks, (state, action) => {
-        return updateGetBookmarks(state, ServiceStatusTypes.loading);
+        return updateGetBookmarks(state);
     }),
     on(BookmarksActions.ReloadBookmarks, (state, action) => {
-        return updateReloadBookmarks(state, ServiceStatusTypes.loading);
+        return updateReloadBookmarks(state);
     }),
     on(BookmarksActions.GetBookmarksCompleted, (state, action) => {
         return addBookmarksToState(state, action.bookmarks);
@@ -31,19 +31,19 @@ const bookmarksReducerFn = createReducer(
     })
 );
 
-function updateGetBookmarks(state: BookmarksState, type: ServiceStatusTypes): BookmarksState {
+function updateGetBookmarks(state: BookmarksState): BookmarksState {
     return {
         ...state,
         bookmarkCalls: state.bookmarkCalls + 1,
-        status: new ServiceStatus(type)
+        status: new ServiceStatus(ServiceStatusTypes.loading)
     };
 }
 
-function updateReloadBookmarks(state: BookmarksState, type: ServiceStatusTypes): BookmarksState {
+function updateReloadBookmarks(state: BookmarksState): BookmarksState {
     return {
         ...state,
         bookmarkCalls: 0,
-        status: new ServiceStatus(type)
+        status: new ServiceStatus(ServiceStatusTypes.loading)
     };
 }
 

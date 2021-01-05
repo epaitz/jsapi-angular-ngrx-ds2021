@@ -16,7 +16,7 @@ The Bookmarks State model class
 
 ## Bookmarks Component 
 
-The Angular Component associated with the /bookmarks route. This component will initialize a serviceStatus$ and bookmarks$ observable from the NgRx Store and dispatch the GetBookmarks action on ngOnInit(). This component will also dispatch ReloadBookmarks from the refresh() method and dispatch NavigationRequest from the zoomTo() method. 
+The Angular Component associated with the /bookmarks route. This component will initialize a serviceStatus$ and bookmarks$ observable from the NgRx Store and dispatch the GetBookmarks action from ngOnInit(). This component will also dispatch ReloadBookmarks from the refresh() method and dispatch NavigationRequest from the zoomTo() method. 
 
 ## Bookmarks Effects
 
@@ -29,3 +29,19 @@ This effect will also not dispatch GetBookmarksCompleted if the MapService is st
 ## Bookmarks Reducer
 
 The NgRx Reducer for the BookmarksState.
+
+The GetBookmarks action will increase the bookmarksCalls property by one and set the status to loading.
+
+The GetBookmarksCompleted action will add the bookmarks array to the state, set the status to content, and reset the bookmarkCalls to zero. 
+
+The GetBookmarksError action will set the state to error.
+
+The ReloadBookmarks action will set the state to loading and reset the bookmarkCalls to zero.
+
+## Bookmarks Selectors
+
+The NgRx Selectors for the Bookmarks State.
+
+## Bookmarks Service
+
+The Angular Service for Bookmarks. This service currently only has a getBookmarks() method which will get the bookmarks array from the server. No need to catch an error here because the Bookmarks Effect will catch the error and dispatch the GetBookmarksError action. 
