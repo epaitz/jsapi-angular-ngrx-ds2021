@@ -1,4 +1,4 @@
-## Bookmarks Component
+## Bookmarks
 
 The BookmarksComponent is tied to the /bookmarks route and is used to demonstrate how you can use an NgRx action to navigate the map. 
 
@@ -6,19 +6,19 @@ The BookmarksComponent is tied to the /bookmarks route and is used to demonstrat
 
 The MapContentsComponetn is tied to the /contents route and is currently empty but can be used to display the layers currently on the map.
 
-## Map View Component
+## Map View
 
 The MapViewComponent, is a sub-component to the MapComponent, and is where the ESRI MapView is added to the DOM. It uses the MapFactory and the MapService to get the WebMap JSON and initialize the Map and MapView objects. 
 
-## Notifications Component
+## Notifications
 
 The NotificationsComponent is tied to the /notifications route and is currently empty. 
 
-## Search Component
+## Search
 
 The SearchComponent is tied to the /search route and is currently empty.
 
-## Settings Component
+## Settings
 
 The SettingsComponent is tied to the /settings route and is currently empty.
 
