@@ -33,6 +33,7 @@ export class HttpClientService {
         return this.httpClient
             .get<T>(url, options)
             .pipe(
+                delay(2000),
                 map((response: T) => {
                     return response;
                 }),

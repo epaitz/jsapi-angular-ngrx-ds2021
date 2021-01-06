@@ -25,6 +25,7 @@
             <button *ngIf="settingsButton != null" mat-button 
                     routerLink={{settingsButton.path}} 
                     routerLinkActive="active" 
+                    (click)="onSidenavToggle(settingsButton.path)"
                     title={{settingsButton.label}}
                     style="height: 48px;">
                 <mat-icon>{{settingsButton.icon}}</mat-icon>
