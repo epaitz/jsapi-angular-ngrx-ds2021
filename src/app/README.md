@@ -51,20 +51,18 @@ Next is the [Angular Material Sidenav component](https://material.angular.io/com
     <mat-sidenav #drawer [opened]="(sidenavOpened$ | async)" [mode]="mode" [class.is-xs]="isXs === true">
     </mat-sidenav>
     
-The mode and is-xs values are updated from the [map.component.ts](https://github.com/epaitz/jsapi-angular-ngrx-ds2021/blob/d14253c0bf6bc9b1c283d340b5c10ed910ff0132/src/app/map/map.component.ts#L49) by watching for media changes using the [MediaObserver](https://github.com/angular/flex-layout/wiki/MediaObserver) from the Angular Flex-Layout. 
+The `mode` and `is-xs` values are updated from the [map.component.ts](https://github.com/epaitz/jsapi-angular-ngrx-ds2021/blob/d14253c0bf6bc9b1c283d340b5c10ed910ff0132/src/app/map/map.component.ts#L49) by watching for media changes using the [MediaObserver](https://github.com/angular/flex-layout/wiki/MediaObserver) from the Angular Flex-Layout. 
+
+The [map.component.css](https://github.com/epaitz/jsapi-angular-ngrx-ds2021/blob/master/src/app/map/map.component.css) contains two classes that control the width of the mat-drawer. 
+
+    .mat-drawer.is-xs {
+        width: 100%;
+    }
+    
+    .mat-drawer {
+        width: 300px;
+    }
+
+By default the mat-drawer width is set to 300px but when the is-xs class is added the mat-drawer width will chagne to 100%.
 
 The final DIV uses the fxLayout and fxFill directives and is just a wrapper for the app-map-view-component.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
