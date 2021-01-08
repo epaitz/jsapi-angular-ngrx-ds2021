@@ -28,7 +28,7 @@ The MapComponent is the component tied to the /map route and contains the Toolba
 
 ## Map Factory
 
-The MapFactory is a service that will initialize the WebMap and MapView and store a reference to the DOM used to create the MapView so that is can be added and removed from the DOM so that the parent component (MapViewComponent) can be destroyed and recreated as the route is navigated. I did consider merging the Map Factory into the Map Service but for now I wanted to keep the creation of the Map and Map View separate from other Map related code like fetching the WebMap JSON. 
+The MapFactory is a service that is responsible for managing the WebMap and the MapView. This service will accept a WebMap JSON object and a DIV element. When initialized a new DIV element will be created and appended to the input DIV element. The WebMap will use the internally created DIV element so that it can be removed from the DOM when the component is being destroyed. If the DIV used to create the MapView is removed from the DOM when the component is being destroyed the MapView will not be destroyed and its state will remain in memory. When the component is recreated the MapFactory will know not to generate a new DIV and MapView. It will append the previously created DIV (which is attached to the MapView) back to the DOM and the map will display in the state it was before the component was destroyed. I did consider merging the Map Factory into the Map Service but for now I wanted to keep the creation of the Map and Map View separate from other Map related code like fetching the WebMap JSON.
 
 ## Map Service
 
