@@ -46,6 +46,16 @@ The next element is my vertical toolbar which has several input bindings and an 
     
 The toolbar does use the [fxShow](https://github.com/angular/flex-layout/wiki/fxShow-API) and the [fxHide](https://github.com/angular/flex-layout/wiki/fxHide-API) directives. This means the above element will be shown by default and ONLY hidden on viewport sizes less than `md` medaiQuery ranges.
 
+Next is the [Angular Material Sidenav component](https://material.angular.io/components/sidenav/overview). Its behavior changes as the browser width changes by changing is `mode` property and by dynamically adding a CSS class I called `is-xs`. 
+
+    <mat-sidenav #drawer [opened]="(sidenavOpened$ | async)" [mode]="mode" [class.is-xs]="isXs === true">
+    </mat-sidenav>
+    
+The mode and is-xs values are updated from the [map.component.ts](https://github.com/epaitz/jsapi-angular-ngrx-ds2021/blob/d14253c0bf6bc9b1c283d340b5c10ed910ff0132/src/app/map/map.component.ts#L49) by watching for media changes using the [MediaObserver](https://github.com/angular/flex-layout/wiki/MediaObserver) from the Angular Flex-Layout. 
+
+The final DIV uses the fxLayout and fxFill directives and is just a wrapper for the app-map-view-component.
+
+
 
 
 
