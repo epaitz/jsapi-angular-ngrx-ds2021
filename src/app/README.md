@@ -10,10 +10,26 @@ The root element in the header component template is an Angular Material Toolbar
         </mat-toolbar-row>
     </mat-toolbar>
 
-The next elements in the toolbar row are a button, which is the hamburger menu button, and a Material Menu. This button and menu are normal HTML and Angular Material elements, but they have additional directives added. 
+The next element in the toolbar row is a normal HTML button that uses the Angular Material mat-button directive and additional Flex Layout directives added. 
 
       <button mat-button [matMenuTriggerFor]="headerMenu" fxShow="true" fxHide.gt-sm>
         <mat-icon>menu</mat-icon>
       </button>
 
-The button has the [fxShow](https://github.com/angular/flex-layout/wiki/fxShow-API) adn the [fxHide](https://github.com/angular/flex-layout/wiki/fxHide-API) directives added. This means the the above element will be shown by default and ONLY hiden on viewport sizes greater than mobile.
+The button has the [fxShow](https://github.com/angular/flex-layout/wiki/fxShow-API) and the [fxHide](https://github.com/angular/flex-layout/wiki/fxHide-API) directives added. This means the above element will be shown by default and ONLY hidden on viewport sizes greater than mobile. The Material Menu is tied to the button and will contain router elements for the root and one level of children. If you have a more complicated set of children routes, then you will have to modify this menu.
+
+The next elements are the title and a spacer. 
+
+    <span style="flex: 1 1 auto"></span>
+    <div fxShow="true" fxHide.lt-md>
+      
+The style of the span could have been replaced with fxFlex=”1 1 auto” do be consistent with using the Flex Layout directives. 
+The last element is a DIV that contains a button for each root level route, a button for the username, and a menu that is displayed when the user name is clicked. 
+
+    <div fxShow="true" fxHide.lt-md>
+    </div>
+
+This DIV also uses the fxShow and fxHide directives. This means the above element will be shown by default and ONLY hidden on viewport sizes less than md medaiQuery ranges.
+
+
+
