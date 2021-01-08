@@ -10,7 +10,7 @@ The root element in the header component template is an Angular Material Toolbar
         </mat-toolbar-row>
     </mat-toolbar>
 
-The next element in the toolbar row is a normal HTML button that uses the Angular Material mat-button directive and additional Flex Layout directives added. 
+The next element in the toolbar row is a normal HTML button that uses the Angular Material mat-button directive and additional Flex Layout directives. 
 
       <button mat-button [matMenuTriggerFor]="headerMenu" fxShow="true" fxHide.gt-sm>
         <mat-icon>menu</mat-icon>
