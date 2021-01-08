@@ -32,5 +32,29 @@ The last element is a DIV that contains a button for each root level route, a bu
 
 This DIV also uses the [fxShow](https://github.com/angular/flex-layout/wiki/fxShow-API) and the [fxHide](https://github.com/angular/flex-layout/wiki/fxHide-API) directives. This means the above element will be shown by default and ONLY hidden on viewport sizes less than `md` medaiQuery ranges.
 
+Next lets take a look at the map.component.html template. 
+
+The root element is a DIV that use the Flex Layout directives [fxLayout](https://github.com/angular/flex-layout/wiki/fxLayout-API) and [fxFill](https://github.com/angular/flex-layout/wiki/fxFlexFill-API).
+
+    <div fxLayout="row" fxFill>
+  
+These two directives have nothing to do with the adaptive UI but are a kind of short-hand syntax when using the CSS Flexbox and other CSS.
+
+The next element is my vertical toolbar which has several input bindings and an output event that do not effect the adaptive UI.
+
+    <app-toolbar (sidenavToggle)="sidenavToggle($event)" [routerConfig]="routerConfig" orientation="vertical" routePath="map" settingsPath="settings" fxShow="true" fxHide.lt-md></app-toolbar>
+    
+The toolbar does use the [fxShow](https://github.com/angular/flex-layout/wiki/fxShow-API) and the [fxHide](https://github.com/angular/flex-layout/wiki/fxHide-API) directives. This means the above element will be shown by default and ONLY hidden on viewport sizes less than `md` medaiQuery ranges.
+
+
+
+
+
+
+
+
+
+
+
 
 
