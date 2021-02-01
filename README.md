@@ -51,3 +51,14 @@ Add the following to the styles.css so that the main.css for the JSAPI is loaded
 ```
 @import url('~@arcgis/core/assets/esri/themes/light/main.css'); 
 ```
+
+- app.component.ts
+
+Don't forget to define the assetsPath in the JSAPI config.
+
+```
+config.assetsPath = '/assets';
+```
+
+I have this defined in the [app.component.ts](https://github.com/epaitz/jsapi-angular-ngrx-ds2021/blob/58800b2c051dcee4af0c49532c442f7d2a44043b/src/app/app.component.ts#L11) file.
+
