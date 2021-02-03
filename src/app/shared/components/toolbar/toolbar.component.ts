@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, HostListener, ElementRef, Output, EventEmitter } from '@angular/core';
 import { RouteMetadata } from '../../models/route-metadata';
-import { RouterService } from '../../services/router.service';
 
 @Component({
     selector: 'app-toolbar',
