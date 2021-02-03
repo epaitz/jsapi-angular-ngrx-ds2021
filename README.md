@@ -26,7 +26,7 @@ The project also contains the following custom components and services
 - [ServiceStatus](src/app/shared/models)
 - [Helpers](src/app/shared/helpers)
 
-There are a few configuration changes that have to me made to an Angular Project so that it works wtih the ArcGIS JavaScript API (v4.18).
+There are a few configuration changes that have to be made to an Angular Project so that it works wtih the ArcGIS JavaScript API (v4.18).
 
 - angular.json
 
